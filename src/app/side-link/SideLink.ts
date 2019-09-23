@@ -1,4 +1,4 @@
-export class Link {
+export class SideLink {
     id: number;
     icon: string;
     label: string;
