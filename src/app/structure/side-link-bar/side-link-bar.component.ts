@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LINKS } from './side-link-bar.data';
+import { SideLink } from '../side-link/SideLink';
 
 @Component({
   selector: 'side-link-bar',
@@ -8,11 +9,9 @@ import { LINKS } from './side-link-bar.data';
 })
 export class SideLinkBarComponent implements OnInit {
 
-  links = LINKS;
+  links: SideLink[] = LINKS;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

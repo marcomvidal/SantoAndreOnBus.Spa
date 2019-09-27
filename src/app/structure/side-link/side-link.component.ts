@@ -11,9 +11,7 @@ export class SideLinkComponent implements OnInit {
   @Input() icon: string;
   @Input() route: string;
   
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

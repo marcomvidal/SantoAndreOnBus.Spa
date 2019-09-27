@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { CompaniesIndexComponent } from './companies/companies-index/companies-index.component';
 import { LinesIndexComponent } from './lines/lines-index/lines-index.component';
 import { LinesFormComponent } from './lines/lines-form/lines-form.component';
 
+
 const routes: Routes = [
-  { path: '',       component: LinesIndexComponent },
-  { path: 'criar',  component: LinesFormComponent }
+  { path: 'linhas',         component: LinesIndexComponent },
+  { path: 'linhas/criar',   component: LinesFormComponent },
+  { path: 'empresas',       component: CompaniesIndexComponent }
 ];
 
 @NgModule({

@@ -8,11 +8,10 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ActionButtonComponent implements OnInit {
 
   @Input() icon: string;
-  @Input() visibleText: string;
+  @Input() label: string;
+  @Input() route: string;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

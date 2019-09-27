@@ -1,0 +1,24 @@
+<heading title="Empresas"></heading>
+
+<card title="Criar">
+    <form class="row" #form="ngForm" (ngSubmit)="onSubmit(form)">
+        <div class="form-group col-md-12">
+            <input [(ngModel)]="newCompany.name" name="name" placeholder="Nome" class="form-control" />
+        </div>
+    
+        <list-of-badges [items]="newCompany.prefixes"
+            (listUpdateEvent)="onPrefixesUpdate($event)"
+            class="col-md-12"></list-of-badges>
+        
+        <form-submit class="col-md-12 text-center"></form-submit>
+    </form>
+</card>
+
+<card title="Existentes">
+    <model-table [columns]="['Nome', 'Prefixos']">
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+    </model-table>
+</card>

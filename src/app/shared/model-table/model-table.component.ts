@@ -9,9 +9,7 @@ export class ModelTableComponent implements OnInit {
 
   @Input() columns: string[];
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }
