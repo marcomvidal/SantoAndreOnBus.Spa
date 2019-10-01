@@ -1,0 +1,8 @@
+<div class="alert alert-success fade show"
+    [class.hidden]="isHidden == true">
+    <strong>Sucesso!</strong> 
+    {{ description }}
+    <button type="button" class="close" (click)="onHideButtonClick()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>

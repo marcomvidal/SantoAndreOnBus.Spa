@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Company } from './Company';
 import { environment } from 'src/environments/environment';
 import { HttpService } from '../shared/http.service';
@@ -11,14 +11,18 @@ export class CompaniesService {
 
   constructor(private http: HttpClient, private httpService: HttpService) {}
 
-  save(company: Company) {
-    console.log('Posting');
+  async save(company: Company): Promise<Object> {
     const url: string = environment.urn + '/companies';
-    
-    return this.http.post(url, JSON.stringify(company), {headers: this.httpService.tokenHeaders()})
-      .subscribe(
-        data => console.log({'sucesso': data}),
-        error => console.log({'falha': error})
-      );
+    const token: string = await this.httpService.getToken();
+
+    return this.http.post(url, JSON.stringify(company), {headers: this.httpService.getHeaders(token)})
+      .toPromise();
+  }
+
+  async getAll(): Promise<Company[]> {
+    const url: string = environment.urn + '/companies';
+    const token: string = await this.httpService.getToken();
+
+    return this.http.get<Company[]>(url, {headers: this.httpService.getHeaders(token)}).toPromise();
   }
 }

@@ -1,14 +1,14 @@
 <div class="row">
     <div class="form-group col-md-6">
-            <div class="input-group">
-                <input #newItem class="form-control" placeholder="Adicionar prefixo" />
-                <div class="input-group-append">
-                    <a class="btn btn-secondary text-white" (click)="onItemAdd(newItem.value)">
-                        <i class="fas fa-plus"></i>
-                    </a>
-                </div>
+        <div class="input-group">
+            <input #newItem class="form-control" placeholder="Adicionar prefixo" />
+            <div class="input-group-append">
+                <a class="btn btn-secondary text-white" (click)="onItemAdd(newItem.value)">
+                    <i class="fas fa-plus"></i>
+                </a>
             </div>
         </div>
+    </div>
         
     <h3 class="form-group col-md-6">
         <span *ngFor="let item of items; index as i; trackBy: trackByFn"

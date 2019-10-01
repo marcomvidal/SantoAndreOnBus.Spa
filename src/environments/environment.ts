@@ -4,7 +4,11 @@
 
 export const environment = {
   urn: 'https://santoandreonbusapi.azurewebsites.net/api',
-  production: false
+  production: false,
+  credential: {
+    email: '',
+    password: ''
+  }
 };
 
 /*

@@ -1,9 +1,18 @@
-<heading title="Empresas"></heading>
+<heading title="Empresas">
+    <loading-spinner *ngIf="isLoading"></loading-spinner>
+</heading>
+
+<success-message description="O salvamento desta empresa foi bem sucedido."></success-message>
 
 <card title="Criar">
     <form class="row" #form="ngForm" (ngSubmit)="onSubmit(form)">
-        <div class="form-group col-md-12">
-            <input [(ngModel)]="newCompany.name" name="name" placeholder="Nome" class="form-control" />
+        <div class="form-group col-md-6">
+            <input [(ngModel)]="newCompany.name" name="name" placeholder="Nome" class="form-control"
+                required minlenght="4" />
+        </div>
+
+        <div class="form-group col-md-6">
+            <error-message description="Erro"></error-message>
         </div>
     
         <list-of-badges [items]="newCompany.prefixes"
@@ -16,9 +25,16 @@
 
 <card title="Existentes">
     <model-table [columns]="['Nome', 'Prefixos']">
-        <tr>
-            <td></td>
-            <td></td>
+        <tr *ngFor="let company of companies">
+            <td>{{ company.name }}</td>
+            <td>
+                <span *ngFor="let prefix of company.prefixes; index as i; trackBy: trackByFn">
+                    {{ prefix.number }}<span *ngIf="i < company.prefixes.length - 1">, </span>
+                </span>
+            </td>
         </tr>
     </model-table>
 </card>
+
+
+

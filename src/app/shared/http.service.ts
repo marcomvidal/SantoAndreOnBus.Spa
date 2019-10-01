@@ -1,17 +1,39 @@
 import { Injectable } from '@angular/core';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { Credential } from './Credential';
+import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
 
-  constructor() {}
+  token: string;
 
-  tokenHeaders(): HttpHeaders {
-    return new HttpHeaders({ 
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE1Njk2MDg4NjIsImV4cCI6MTU2OTYxMjQ2MiwiaWF0IjoxNTY5NjA4ODYyLCJpc3MiOiJTYW50b0FuZHJlT25CdXMiLCJhdWQiOiJodHRwczovL3NhbnRvYW5kcmVvbmJ1c2FwaS5henVyZXdlYnNpdGVzLm5ldCJ9.NyAcs8-QiHuJbNuS07BW6vQz_d75nGlvidcgahhwIIA'
+  constructor(private http: HttpClient) {}
+
+  async getToken(): Promise<string> {
+    const url: string = environment.urn + '/authentication/login';
+
+    return this.http.post(url, 
+      this.getCredentials(),
+      {headers: this.getHeaders(), responseType: 'text'})
+        .toPromise();
+  }
+
+  getCredentials(): string {
+    return JSON.stringify({
+      email: environment.credential.email,
+      password: environment.credential.password
     });
   }
+
+  getHeaders(token?: string): HttpHeaders {
+    return token != null ?
+      new HttpHeaders({'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`})
+      :
+      new HttpHeaders({'Content-Type': 'application/json'});
+  }
+  
 }

@@ -10,6 +10,8 @@ import { ModelTableComponent } from './model-table/model-table.component';
 import { ListOfBadgesComponent } from './list-of-badges/list-of-badges.component';
 import { FormSubmitComponent } from './form-submit/form-submit.component';
 import { HttpService } from './http.service';
+import { SuccessMessageComponent } from './success-message/success-message.component';
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 
 
 @NgModule({
@@ -19,8 +21,10 @@ import { HttpService } from './http.service';
     FooterBarComponent,
     HeadingComponent,
     ListOfBadgesComponent,
+    LoadingSpinnerComponent,
     ModelTableComponent,
-    FormSubmitComponent
+    FormSubmitComponent,
+    SuccessMessageComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +37,9 @@ import { HttpService } from './http.service';
     FormSubmitComponent,
     HeadingComponent,
     ListOfBadgesComponent,
+    LoadingSpinnerComponent,
     ModelTableComponent,
+    SuccessMessageComponent
   ],
   providers: [
     HttpService
