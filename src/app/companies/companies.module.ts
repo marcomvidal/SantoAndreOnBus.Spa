@@ -11,8 +11,8 @@ import { CompaniesService } from './companies.service';
   declarations: [CompaniesIndexComponent],
   imports: [
     CommonModule,
-    SharedModule,
-    FormsModule
+    FormsModule,
+    SharedModule
   ],
   exports: [
     CompaniesIndexComponent

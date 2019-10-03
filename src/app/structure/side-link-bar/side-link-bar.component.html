@@ -1,39 +1,35 @@
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-    <!-- Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon">
-            <i class="fas fa-bus"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">Santo André On Bus</div>
-    </a>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0">
-
-    <!-- Dashboard Link -->
-    <side-link label="Dashboard"
-        icon="fas fa-fw fa-tachometer-alt"
-        route="/lines"></side-link>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-
-    <!-- Heading -->
-    <div class="sidebar-heading">Recursos</div>
-
-    <!-- Linkbar Items -->
-    <side-link *ngFor="let link of links" 
-        label="{{ link.label }}"
-        icon="{{ link.icon }}"
-        route="{{ link.route }}"></side-link>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
-
-    <!-- Sidebar Toggler -->
-    <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+<!-- Brand -->
+<a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <div class="sidebar-brand-icon">
+        <i class="fas fa-bus"></i>
     </div>
+    <div class="sidebar-brand-text mx-3">Santo André On Bus</div>
+</a>
 
-</ul>
+<!-- Divider -->
+<hr class="sidebar-divider my-0">
+
+<!-- Dashboard Link -->
+<side-link label="Dashboard"
+    icon="fas fa-fw fa-tachometer-alt"
+    route="/lines"></side-link>
+
+<!-- Divider -->
+<hr class="sidebar-divider">
+
+<!-- Heading -->
+<div class="sidebar-heading">Recursos</div>
+
+<!-- Linkbar Items -->
+<side-link *ngFor="let link of links" 
+    label="{{ link.label }}"
+    icon="{{ link.icon }}"
+    route="{{ link.route }}"></side-link>
+
+<!-- Divider -->
+<hr class="sidebar-divider d-none d-md-block">
+
+<!-- Sidebar Toggler -->
+<div class="text-center d-none d-md-inline">
+    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+</div>

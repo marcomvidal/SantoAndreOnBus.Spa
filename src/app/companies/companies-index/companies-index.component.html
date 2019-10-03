@@ -2,30 +2,56 @@
     <loading-spinner *ngIf="isLoading"></loading-spinner>
 </heading>
 
-<success-message description="O salvamento desta empresa foi bem sucedido."></success-message>
+<success-message [isHidden]="isSuccessMessageHidden"
+    (hideSuccessMessageEvent)="hide($event)"
+    description="O salvamento desta empresa foi bem sucedido."></success-message>
 
 <card title="Criar">
-    <form class="row" #form="ngForm" (ngSubmit)="onSubmit(form)">
-        <div class="form-group col-md-6">
-            <input [(ngModel)]="newCompany.name" name="name" placeholder="Nome" class="form-control"
-                required minlenght="4" />
-        </div>
+    <div class="card-body">
+        <form class="row" #form="ngForm" (ngSubmit)="onSubmit(form)">
+            <div class="form-group col-md-12">
+                <input name="name" placeholder="Nome" class="form-control" [(ngModel)]="newCompany.name"
+                    #name="ngModel" minlength="4" required />
+                <div *ngIf="!name.valid && name.touched" class="text-danger">
+                    Nome é obrigatório e deve possuir ao menos quatro caracteres.
+                </div>
+            </div>
 
-        <div class="form-group col-md-6">
-            <error-message description="Erro"></error-message>
-        </div>
-    
-        <list-of-badges [items]="newCompany.prefixes"
-            (listUpdateEvent)="onPrefixesUpdate($event)"
-            class="col-md-12"></list-of-badges>
-        
-        <form-submit class="col-md-12 text-center"></form-submit>
-    </form>
+            <div class="form-group col-md-6">
+                <div class="input-group">
+                    <input name="prefix" placeholder="Adicionar prefixo" class="form-control" [ngModel]=""
+                        #prefix="ngModel" />
+                    <div class="input-group-append">
+                        <a class="btn btn-secondary" (click)="onAddPrefix(prefix.value)">
+                            <i class="fas fa-plus text-white"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="form-group col-md-6">
+                <badge *ngFor="let item of newCompany.prefixes"
+                    [item]="item.number"
+                    (removeEvent)="onRemovePrefix($event)"></badge>
+            </h3>
+            
+            <div class="form-group col-md-12 text-center">
+                <button submit-button 
+                    [modelId]="newCompany.id"
+                    [disabled]="!form.valid"></button>
+            </div>
+
+        </form>
+    </div>
 </card>
 
 <card title="Existentes">
-    <model-table [columns]="['Nome', 'Prefixos']">
+    <model-table [columns]="['Ações', 'Nome', 'Prefixos']">
         <tr *ngFor="let company of companies">
+            <td>
+                <edit-button (click)="onEdit(company)"></edit-button>
+                <delete-button (click)="onDelete(company)"></delete-button>
+            </td>
             <td>{{ company.name }}</td>
             <td>
                 <span *ngFor="let prefix of company.prefixes; index as i; trackBy: trackByFn">

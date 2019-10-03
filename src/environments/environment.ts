@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  urn: 'https://santoandreonbusapi.azurewebsites.net/api',
+  urn: '',
   production: false,
   credential: {
     email: '',

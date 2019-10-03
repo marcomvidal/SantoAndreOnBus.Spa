@@ -8,20 +8,13 @@ import { Component, OnInit, Input } from '@angular/core';
 export class SuccessMessageComponent implements OnInit {
 
   @Input() description: string;
-  isHidden: boolean = true;
+  @Input() isHidden: boolean;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-    
-  }
+  ngOnInit() {}
 
-  show(): void {
-    this.isHidden = false;
-  }
-
-  onHideButtonClick(): void {
+  onHideButtonClick() {
     this.isHidden = true;
   }
-
 }

@@ -9,20 +9,23 @@ import { HttpService } from '../shared/http.service';
 })
 export class CompaniesService {
 
-  constructor(private http: HttpClient, private httpService: HttpService) {}
+  private urn: string;
+
+  constructor(private http: HttpClient, private httpService: HttpService) {
+    this.urn = environment.urn + '/companies';
+  }
 
   async save(company: Company): Promise<Object> {
-    const url: string = environment.urn + '/companies';
     const token: string = await this.httpService.getToken();
+    const headers = {headers: this.httpService.getHeaders(token)};
 
-    return this.http.post(url, JSON.stringify(company), {headers: this.httpService.getHeaders(token)})
-      .toPromise();
+    return this.http.post<Company>(this.urn, company, headers).toPromise();
   }
 
   async getAll(): Promise<Company[]> {
-    const url: string = environment.urn + '/companies';
     const token: string = await this.httpService.getToken();
+    const headers = {headers: this.httpService.getHeaders(token)};
 
-    return this.http.get<Company[]>(url, {headers: this.httpService.getHeaders(token)}).toPromise();
+    return this.http.get<Company[]>(this.urn, headers).toPromise();
   }
 }
