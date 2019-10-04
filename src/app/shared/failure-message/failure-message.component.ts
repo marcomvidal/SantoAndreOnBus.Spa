@@ -1,11 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'success-message',
-  templateUrl: './success-message.component.html',
-  styleUrls: ['./success-message.component.css']
+  selector: 'failure-message',
+  templateUrl: './failure-message.component.html',
+  styleUrls: ['./failure-message.component.css']
 })
-export class SuccessMessageComponent implements OnInit {
+export class FailureMessageComponent implements OnInit {
 
   @Input() description: string;
   @Input() isHidden: boolean;

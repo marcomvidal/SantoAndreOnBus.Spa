@@ -2,9 +2,8 @@
     <loading-spinner *ngIf="isLoading"></loading-spinner>
 </heading>
 
-<success-message [isHidden]="isSuccessMessageHidden"
-    (hideSuccessMessageEvent)="hide($event)"
-    description="O salvamento desta empresa foi bem sucedido."></success-message>
+<success-message></success-message>
+<failure-message></failure-message>
 
 <card title="Criar">
     <div class="card-body">

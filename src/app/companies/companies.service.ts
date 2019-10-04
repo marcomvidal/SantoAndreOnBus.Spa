@@ -15,6 +15,13 @@ export class CompaniesService {
     this.urn = environment.urn + '/companies';
   }
 
+  async getAll(): Promise<Company[]> {
+    const token: string = await this.httpService.getToken();
+    const headers = {headers: this.httpService.getHeaders(token)};
+
+    return this.http.get<Company[]>(this.urn, headers).toPromise();
+  }
+
   async save(company: Company): Promise<Object> {
     const token: string = await this.httpService.getToken();
     const headers = {headers: this.httpService.getHeaders(token)};
@@ -22,10 +29,11 @@ export class CompaniesService {
     return this.http.post<Company>(this.urn, company, headers).toPromise();
   }
 
-  async getAll(): Promise<Company[]> {
+  async update(company: Company): Promise<Object> {
     const token: string = await this.httpService.getToken();
     const headers = {headers: this.httpService.getHeaders(token)};
-
-    return this.http.get<Company[]>(this.urn, headers).toPromise();
+    const url = `${this.urn}/${company.id}`;
+    
+    return this.http.patch<Company>(url, company, headers).toPromise();
   }
 }

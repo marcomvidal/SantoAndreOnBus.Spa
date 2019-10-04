@@ -7,6 +7,7 @@ import { BadgeComponent } from './badge/badge.component';
 import { CardComponent } from './card/card.component';
 import { DeleteButtonComponent } from './delete-button/delete-button.component';
 import { EditButtonComponent } from './edit-button/edit-button.component';
+import { FailureMessageComponent } from './failure-message/failure-message.component';
 import { FooterBarComponent } from './footer-bar/footer-bar.component';
 import { HeadingComponent } from './heading/heading.component';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
@@ -23,6 +24,7 @@ import { HttpService } from './http.service';
     CardComponent,
     DeleteButtonComponent,
     EditButtonComponent,
+    FailureMessageComponent,
     FooterBarComponent,
     HeadingComponent,
     LoadingSpinnerComponent,
@@ -40,6 +42,7 @@ import { HttpService } from './http.service';
     CardComponent,
     DeleteButtonComponent,
     EditButtonComponent,
+    FailureMessageComponent,
     FooterBarComponent,
     HeadingComponent,
     LoadingSpinnerComponent,

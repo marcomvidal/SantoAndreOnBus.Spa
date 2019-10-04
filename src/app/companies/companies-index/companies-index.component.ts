@@ -1,8 +1,10 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Company } from '../Company';
 import { CompaniesService } from '../companies.service';
 import { NgForm } from '@angular/forms';
 import { Prefix } from '../Prefix';
+import { FailureMessageComponent } from 'src/app/shared/failure-message/failure-message.component';
+import { SuccessMessageComponent } from 'src/app/shared/success-message/success-message.component';
 
 @Component({
   selector: 'app-companies-index',
@@ -14,7 +16,8 @@ export class CompaniesIndexComponent {
   newCompany: Company;
   companies: Company[];
   isLoading: boolean = true;
-  isSuccessMessageHidden: boolean = true;
+  @ViewChild(SuccessMessageComponent, {static: false}) successMessage: SuccessMessageComponent;
+  @ViewChild(FailureMessageComponent, {static: false}) failureMessage: FailureMessageComponent;
 
   constructor(private service: CompaniesService) {}
 
@@ -24,16 +27,31 @@ export class CompaniesIndexComponent {
 
   async loadData() {
     this.newCompany = new Company('', new Array<Prefix>());
-    this.companies = await this.service.getAll();
+
+    try {
+      this.companies = await this.service.getAll();
+    } catch (e) {
+      this.failureMessage.onShow("Houve um problema na obtenção dos dados. Verifique sua conexão e tente novamente.");
+    }
+    
     this.isLoading = false;
   }
 
   async onSubmit(form: NgForm): Promise<void> {
-    await this.service.save(this.newCompany);
-    this.isSuccessMessageHidden = false;
-    this.isLoading = true;
-    this.loadData();
-    form.reset();
+    try {
+      if (this.newCompany.id == null) {
+        await this.service.save(this.newCompany);
+      } else {
+        await this.service.update(this.newCompany);
+      }
+
+      this.successMessage.onShow("O salvamento desta empresa foi bem sucedido.");
+      this.isLoading = true;
+      this.loadData();
+      form.reset();
+    } catch (e) {
+      this.failureMessage.onShow("Houve um problema no envio dos dados. Verifique sua conexão e tente novamente.");
+    }
   }
 
   async onEdit(company: Company) {
