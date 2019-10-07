@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Company } from './Company';
 import { environment } from 'src/environments/environment';
 import { HttpService } from '../shared/http.service';
@@ -17,23 +17,30 @@ export class CompaniesService {
 
   async getAll(): Promise<Company[]> {
     const token: string = await this.httpService.getToken();
-    const headers = {headers: this.httpService.getHeaders(token)};
+    const headers = {headers: this.httpService.getHeadersForJson(token)};
 
     return this.http.get<Company[]>(this.urn, headers).toPromise();
   }
 
   async save(company: Company): Promise<Object> {
     const token: string = await this.httpService.getToken();
-    const headers = {headers: this.httpService.getHeaders(token)};
+    const headers = {headers: this.httpService.getHeadersForJson(token)};
 
     return this.http.post<Company>(this.urn, company, headers).toPromise();
   }
 
   async update(company: Company): Promise<Object> {
     const token: string = await this.httpService.getToken();
-    const headers = {headers: this.httpService.getHeaders(token)};
+    const headers = {headers: this.httpService.getHeadersForJson(token)};
     const url = `${this.urn}/${company.id}`;
     
     return this.http.patch<Company>(url, company, headers).toPromise();
+  }
+
+  async delete(company: Company): Promise<Object> {
+    const token: string = await this.httpService.getToken();
+    const url = `${this.urn}/${company.id}`;
+
+    return this.http.delete(url, this.httpService.getHeadersForPlainText(token)).toPromise();
   }
 }

@@ -18,7 +18,7 @@ export class HttpService {
 
     return this.http.post(url, 
       this.getCredentials(),
-      {headers: this.getHeaders(), responseType: 'text'})
+      {headers: this.getHeadersForJson(), responseType: 'text'})
         .toPromise();
   }
 
@@ -29,11 +29,18 @@ export class HttpService {
     });
   }
 
-  getHeaders(token?: string): HttpHeaders {
+  getHeadersForJson(token?: string): HttpHeaders {
     return token != null ?
       new HttpHeaders({'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`})
       :
       new HttpHeaders({'Content-Type': 'application/json'});
+  }
+
+  getHeadersForPlainText(token?: string): Object {
+    return token != null ?
+      {headers: new HttpHeaders({'Authorization': `Bearer ${token}`}), responseType: "text" as "json"}
+      :
+      {headers: new HttpHeaders({'Authorization': `Bearer ${token}`}), responseType: "text" as "json"};
   }
   
 }
