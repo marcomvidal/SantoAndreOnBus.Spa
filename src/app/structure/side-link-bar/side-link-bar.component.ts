@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { LINKS } from './side-link-bar.data';
 import { SideLink } from '../side-link/SideLink';
 
@@ -10,9 +10,14 @@ import { SideLink } from '../side-link/SideLink';
 })
 export class SideLinkBarComponent implements OnInit {
 
+  @HostBinding('class.toggled') isExpanded: boolean = true;
   links: SideLink[] = LINKS;
 
   constructor() {}
 
   ngOnInit() {}
+
+  onExpand(): void {
+    this.isExpanded = this.isExpanded == true ? false : true;
+  }
 }

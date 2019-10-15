@@ -1,0 +1,38 @@
+<heading title="Veículos">
+    <loading-spinner *ngIf="isLoading"></loading-spinner>
+</heading>
+
+<success-message></success-message>
+<failure-message></failure-message>
+
+<card title="Criar">
+    <div class="card-body">
+        <form class="row" #form="ngForm" (ngSubmit)="onSubmit(form)">
+            <div class="form-group col-md-12">
+                <input name="name" placeholder="Nome" class="form-control" [(ngModel)]="newVehicle.name"
+                    #name="ngModel" minlength="4" required />
+                <div *ngIf="!name.valid && name.touched" class="text-danger">
+                    Nome é obrigatório e deve possuir ao menos quatro caracteres.
+                </div>
+            </div>
+            
+            <div class="form-group col-md-12 text-center">
+                <button submit-button 
+                    [modelId]="newVehicle.id"
+                    [disabled]="!form.valid"></button>
+            </div>
+        </form>
+    </div>
+</card>
+
+<card title="Existentes">
+    <model-table [columns]="['Ações', 'Nome']">
+        <tr *ngFor="let vehicle of vehicles">
+            <td>
+                <edit-button (click)="onEdit(vehicle)"></edit-button>
+                <delete-button (click)="onDelete(vehicle)"></delete-button>
+            </td>
+            <td>{{ vehicle.name }}</td>
+        </tr>
+    </model-table>
+</card>

@@ -7,6 +7,7 @@ import { SharedModule } from './shared/shared.module';
 import { StructureModule } from './structure/structure.module';
 import { CompaniesModule } from './companies/companies.module';
 import { LinesModule } from './lines/lines.module';
+import { VehiclesModule } from './vehicles/vehicles.module';
 
 import { AppComponent } from './app.component';
 
@@ -21,8 +22,9 @@ import { AppComponent } from './app.component';
     AppRoutingModule,
     SharedModule,
     StructureModule,
+    CompaniesModule,
     LinesModule,
-    CompaniesModule
+    VehiclesModule
   ],
   providers: [],
   bootstrap: [AppComponent]

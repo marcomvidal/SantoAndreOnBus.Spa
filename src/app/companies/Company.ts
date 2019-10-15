@@ -1,7 +1,6 @@
 import { Prefix } from './Prefix';
 
 export class Company {
-   
     id?: number;
     name: string;
     prefixes: Prefix[];

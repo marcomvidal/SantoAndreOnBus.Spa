@@ -3,22 +3,22 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 
-import { CompaniesIndexComponent } from './companies-index/companies-index.component';
-import { CompaniesService } from './companies.service';
+import { VehiclesIndexComponent } from './vehicles-index/vehicles-index.component';
+import { VehiclesService } from './vehicles.service';
 
 
 @NgModule({
-  declarations: [CompaniesIndexComponent],
+  declarations: [VehiclesIndexComponent],
   imports: [
     CommonModule,
     FormsModule,
     SharedModule
   ],
   exports: [
-    CompaniesIndexComponent
+    VehiclesIndexComponent
   ],
   providers: [
-    CompaniesService
+    VehiclesService
   ]
 })
-export class CompaniesModule { }
+export class VehiclesModule { }

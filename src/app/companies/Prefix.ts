@@ -1,5 +1,4 @@
 export class Prefix {
-
     id?: number;
     number: string;
     companyId?: number;
