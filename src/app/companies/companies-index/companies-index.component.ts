@@ -46,15 +46,11 @@ export class CompaniesIndexComponent {
   }
 
   async onSubmit(form: NgForm): Promise<void> {
-    const positiveFeedback: string = "A empresa foi salva com sucesso.";
-    const negativeFeedback: string = "Houve um problema no envio dos dados. Verifique sua conexão e tente novamente.";
-
     this.commitChangesAndFeedback({
       transactions: async () => this.newCompany.id == null ?
           await this.service.save(this.newCompany) :
           await this.service.update(this.newCompany),
-      onSuccess: () => {this.successMessage.onShow(positiveFeedback); form.reset();},
-      onFailure: () => this.failureMessage.onShow(negativeFeedback)
+      onSuccess: () => {this.successMessage.onShow("A empresa foi salva com sucesso."); form.reset();}
     });
   }
 
@@ -64,19 +60,15 @@ export class CompaniesIndexComponent {
   }
 
   async onDelete(company: Company) {
-    const positiveFeedback: string = "A empresa foi excluída com sucesso.";
-    const negativeFeedback: string = "Houve um problema no envio dos dados. Verifique sua conexão e tente novamente";
-
     this.commitChangesAndFeedback({
       transactions: async () => await this.service.delete(company),
-      onSuccess: () => this.successMessage.onShow(positiveFeedback),
-      onFailure: () => this.failureMessage.onShow(negativeFeedback)
+      onSuccess: () => this.successMessage.onShow("A empresa foi excluída com sucesso.")
     });
   }
 
   private async commitChangesAndFeedback(
-    {transactions, onSuccess, onFailure}:
-    {transactions: () => Promise<Object>, onSuccess: () => void, onFailure: () => void}) {
+    {transactions, onSuccess}:
+    {transactions: () => Promise<Object>, onSuccess: () => void}) {
     try {
       this.isLoading = true;
       await transactions();
@@ -85,7 +77,12 @@ export class CompaniesIndexComponent {
       window.scrollTo(0, 0);
     } catch (e) {
       this.isLoading = false;
-      onFailure();
+
+      if (e.status == 400) {
+        this.failureMessage.onShow("Há erros de preenchimento deste formulário:", e.error.errors);
+      } else {
+        this.failureMessage.onShow("Houve um problema no envio dos dados. Verifique sua conexão e tente novamente");
+      }
     }
   }
 }

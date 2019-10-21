@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { AspNetCoreErrors } from './AspNetCoreErrors';
 
 @Component({
   selector: 'failure-message',
@@ -8,6 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class FailureMessageComponent implements OnInit {
 
   @Input() description: string;
+  @Input() validationErrors: AspNetCoreErrors;
   @Input() isHidden: boolean;
 
   constructor() {}
@@ -20,8 +22,9 @@ export class FailureMessageComponent implements OnInit {
     this.isHidden = true;
   }
 
-  onShow(description: string): void {
+  onShow(description: string, validationErrors?: Object): void {
     this.description = description;
+    if (validationErrors != undefined) { this.validationErrors = new AspNetCoreErrors(validationErrors); }
     this.isHidden = false;
   }
 }

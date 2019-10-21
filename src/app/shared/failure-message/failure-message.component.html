@@ -2,7 +2,12 @@
     [class.hidden]="isHidden == true">
     <strong>Falha!</strong> 
     {{ description }}
+
     <button type="button" class="close" (click)="onHide()">
         <span aria-hidden="true">&times;</span>
     </button>
+
+    <ul *ngIf="validationErrors != undefined" class="mb-0">
+        <li *ngFor="let error of validationErrors.parsedErrors()">{{ error }}</li>
+    </ul>
 </div>
