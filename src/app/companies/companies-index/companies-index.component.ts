@@ -28,11 +28,8 @@ export class CompaniesIndexComponent {
   async loadData() {
     this.newCompany = new Company("", new Array<Prefix>());
 
-    try {
-      this.companies = await this.service.getAll();
-    } catch (e) {
-      this.failureMessage.onShow("Houve um problema na obtenção dos dados. Verifique sua conexão e tente novamente.");
-    }
+    try {this.companies = await this.service.getAll();}
+    catch (e) {this.failureMessage.showConnectivityError();}
     
     this.isLoading = false;
   }
@@ -78,11 +75,8 @@ export class CompaniesIndexComponent {
     } catch (e) {
       this.isLoading = false;
 
-      if (e.status == 400) {
-        this.failureMessage.onShow("Há erros de preenchimento deste formulário:", e.error.errors);
-      } else {
-        this.failureMessage.onShow("Houve um problema no envio dos dados. Verifique sua conexão e tente novamente");
-      }
+      if (e.status == 400) {this.failureMessage.showFormErrors(e.error.errors);}
+      else {this.failureMessage.showConnectivityError();}
     }
   }
 }

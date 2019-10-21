@@ -27,4 +27,12 @@ export class FailureMessageComponent implements OnInit {
     if (validationErrors != undefined) { this.validationErrors = new AspNetCoreErrors(validationErrors); }
     this.isHidden = false;
   }
+
+  showConnectivityError(): void {
+    return this.onShow("Houve um problema na obtenção dos dados. Verifique sua conexão e tente novamente.");
+  }
+
+  showFormErrors(errors: any): void {
+    return this.onShow("Há erros de preenchimento deste formulário:", errors);
+  }
 }

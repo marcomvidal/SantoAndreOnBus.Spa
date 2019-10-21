@@ -10,10 +10,7 @@
         <form class="row" #form="ngForm" (ngSubmit)="onSubmit(form)">
             <div class="form-group col-md-12">
                 <input name="name" placeholder="Nome" class="form-control" [(ngModel)]="newVehicle.name"
-                    #name="ngModel" minlength="4" required />
-                <div *ngIf="!name.valid && name.touched" class="text-danger">
-                    Nome é obrigatório e deve possuir ao menos quatro caracteres.
-                </div>
+                    #name="ngModel" required />
             </div>
             
             <div class="form-group col-md-12 text-center">
