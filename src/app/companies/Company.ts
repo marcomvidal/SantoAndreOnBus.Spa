@@ -5,10 +5,9 @@ export class Company {
     name: string;
     prefixes: Prefix[];
 
-    constructor(name: string, prefixes: Prefix[], id?: number) {
+    constructor(id?: number, name?: string, prefixes?: Prefix[]) {
+        this.id = id;
         this.name = name;
-        this.prefixes = prefixes;
-
-        if (id != undefined) { this.id = id; }
+        this.prefixes = prefixes != undefined ? prefixes : new Array<Prefix>();
     }
 }

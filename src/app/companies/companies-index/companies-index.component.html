@@ -5,7 +5,7 @@
 <success-message></success-message>
 <failure-message></failure-message>
 
-<card title="Criar">
+<card title="{{ isEditing ? 'Editando: ' + newCompany.name : 'Criar' }}">
     <div class="card-body">
         <form class="row" #form="ngForm" (ngSubmit)="onSubmit(form)">
             <div class="form-group col-md-12">
@@ -18,7 +18,7 @@
                     <input name="prefix" placeholder="Adicionar prefixo" class="form-control" [ngModel]=""
                         #prefix="ngModel" />
                     <div class="input-group-append">
-                        <a class="btn btn-secondary" (click)="onAddPrefix(prefix.value)">
+                        <a class="btn btn-primary" (click)="onAddPrefix(prefix.value)">
                             <i class="fas fa-plus text-white"></i>
                         </a>
                     </div>
@@ -32,6 +32,7 @@
             </h3>
             
             <div class="form-group col-md-12 text-center">
+                <reset-button (click)="resetForm(form)"></reset-button>
                 <button submit-button 
                     [modelId]="newCompany.id"
                     [disabled]="!form.valid"></button>

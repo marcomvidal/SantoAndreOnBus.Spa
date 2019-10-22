@@ -5,7 +5,7 @@
 <success-message></success-message>
 <failure-message></failure-message>
 
-<card title="Criar">
+<card title="{{ isEditing ? 'Editando: ' + newVehicle.name : 'Criar' }}">
     <div class="card-body">
         <form class="row" #form="ngForm" (ngSubmit)="onSubmit(form)">
             <div class="form-group col-md-12">
@@ -14,6 +14,7 @@
             </div>
             
             <div class="form-group col-md-12 text-center">
+                <reset-button (click)="resetForm(form)"></reset-button>
                 <button submit-button 
                     [modelId]="newVehicle.id"
                     [disabled]="!form.valid"></button>

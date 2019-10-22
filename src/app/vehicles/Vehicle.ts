@@ -2,9 +2,8 @@ export class Vehicle {
     id?: number;
     name: string;
 
-    constructor(name: string, id?: number) {
+    constructor(id?: number, name?: string) {
+        this.id = id;
         this.name = name;
-
-        if (id != undefined) { this.id = id; }
     }
 }

@@ -14,6 +14,7 @@ export class VehiclesIndexComponent implements OnInit {
 
   newVehicle: Vehicle;
   vehicles: Vehicle[];
+  isEditing: boolean = false;
   isLoading: boolean = true;
   @ViewChild(SuccessMessageComponent, {static: false}) successMessage: SuccessMessageComponent;
   @ViewChild(FailureMessageComponent, {static: false}) failureMessage: FailureMessageComponent;
@@ -25,7 +26,7 @@ export class VehiclesIndexComponent implements OnInit {
   }
 
   async loadData() {
-    this.newVehicle = new Vehicle("");
+    this.newVehicle = new Vehicle();
 
     try {this.vehicles = await this.service.getAll();}
     catch (e) {this.failureMessage.showConnectivityError();}
@@ -43,8 +44,15 @@ export class VehiclesIndexComponent implements OnInit {
   }
 
   async onEdit(vehicle: Vehicle) {
-    window.scrollTo(0, 0);
+    this.isEditing = true;
     this.newVehicle = vehicle;
+    window.scrollTo(0, 0);
+  }
+
+  resetForm(form: NgForm) {
+    form.resetForm(form.value);
+    this.isEditing = false;
+    this.newVehicle = new Vehicle();
   }
 
   async onDelete(vehicle: Vehicle) {

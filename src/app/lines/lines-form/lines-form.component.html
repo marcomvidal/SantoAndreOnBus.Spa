@@ -1,20 +1,43 @@
-<heading title="Cadastro de linhas"></heading>
+<heading title="Cadastrar nova linha">
+    <loading-spinner *ngIf="isLoading"></loading-spinner>
+</heading>
 
-<div class="card-deck">
-    <card title="Geral">
-        <div class="row">
-            
+<success-message></success-message>
+<failure-message></failure-message>
+
+<form #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <card title="Informações gerais">
+        <div class="card-body row">
+            <div class="form-group col-md-4">
+                <input name="letter" placeholder="Letra" class="form-control" [(ngModel)]="line.letter"
+                    #name="ngModel" required maxlength="2" />
+            </div>
+
+            <div class="form-group col-md-4">
+                <input name="number" placeholder="Número" class="form-control" [(ngModel)]="line.number"
+                    #name="ngModel" required maxlength="3" />
+            </div>
+
+            <div class="form-group col-md-4">
+                <input name="peakHeadway" placeholder="Intervalo de pico" class="form-control" [(ngModel)]="line.peakHeadway"
+                    #name="ngModel" required />
+            </div>
+
+            <div class="form-group col-md-6">
+                <input name="fromwards" placeholder="Origem" class="form-control" [(ngModel)]="line.fromwards"
+                    #name="ngModel" required />
+            </div>
+
+            <div class="form-group col-md-6">
+                <input name="towards" placeholder="Destino" class="form-control" [(ngModel)]="line.towards"
+                    #name="ngModel" required />
+            </div>
         </div>
     </card>
-    
-    <card title="Itinerário">
-        <div class="row">
-            
-        </div>
-    </card>
-</div>
 
-<div class="row">
-    <action-button icon="fas fa-save" label="Salvar" class="col-md-12 text-center"></action-button>
-</div>
-
+    <div class="form-group col-md-12 text-center">
+        <button submit-button 
+            [modelId]="line.id"
+            [disabled]="!form.valid"></button>
+    </div>
+</form>

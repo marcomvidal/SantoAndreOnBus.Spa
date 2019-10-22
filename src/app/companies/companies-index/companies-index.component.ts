@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Input } from '@angular/core';
 import { Company } from '../Company';
 import { CompaniesService } from '../companies.service';
 import { FailureMessageComponent } from 'src/app/shared/failure-message/failure-message.component';
@@ -16,6 +16,7 @@ export class CompaniesIndexComponent {
   newCompany: Company;
   companies: Company[];
   isLoading: boolean = true;
+  isEditing: boolean = false;
   @ViewChild(SuccessMessageComponent, {static: false}) successMessage: SuccessMessageComponent;
   @ViewChild(FailureMessageComponent, {static: false}) failureMessage: FailureMessageComponent;
 
@@ -26,7 +27,7 @@ export class CompaniesIndexComponent {
   }
 
   async loadData() {
-    this.newCompany = new Company("", new Array<Prefix>());
+    this.newCompany = new Company();
 
     try {this.companies = await this.service.getAll();}
     catch (e) {this.failureMessage.showConnectivityError();}
@@ -47,13 +48,24 @@ export class CompaniesIndexComponent {
       transactions: async () => this.newCompany.id == null ?
           await this.service.save(this.newCompany) :
           await this.service.update(this.newCompany),
-      onSuccess: () => {this.successMessage.onShow("A empresa foi salva com sucesso."); form.reset();}
+      onSuccess: () => {
+        this.isEditing = false;
+        this.successMessage.onShow("A empresa foi salva com sucesso.");
+        form.reset();
+      }
     });
   }
 
   async onEdit(company: Company) {
-    window.scrollTo(0, 0);
+    this.isEditing = true;
     this.newCompany = company;
+    window.scrollTo(0, 0);
+  }
+
+  resetForm(form: NgForm) {
+    form.resetForm(form.value);
+    this.isEditing = false;
+    this.newCompany = new Company();
   }
 
   async onDelete(company: Company) {
