@@ -9,6 +9,13 @@ export class HttpService {
 
   constructor(private http: HttpClient) {}
 
+  async getById<T>(urn: string): Promise<T> {
+    const token: string = await this.getToken();
+    const headers = {headers: this.getHeadersForJson(token)};
+
+    return this.http.get<T>(urn, headers).toPromise();
+  }
+
   async getAll<T>(urn: string): Promise<T[]> {
     const token: string = await this.getToken();
     const headers = {headers: this.getHeadersForJson(token)};

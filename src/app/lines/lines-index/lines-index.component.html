@@ -2,13 +2,20 @@
     <action-button label="Criar" route="/linhas/criar" icon="fas fa-plus"></action-button>
 </heading>
 
+<success-message></success-message>
+<failure-message></failure-message>
+
 <card>
-    <model-table [columns]="['Linha', 'Origem', 'Destino', 'Intervalo de pico']">
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+    <model-table [columns]="['Ações', 'Linha', 'Origem', 'Destino', 'Intervalo de pico']">
+        <tr *ngFor="let line of lines">
+            <td>
+                <a [routerLink]="['/linhas', line.letter + '-' + line.number]"><edit-button></edit-button></a>
+                <delete-button (click)="onDelete(line)"></delete-button>
+            </td>
+            <td>{{ line.letter }}-{{ line.number }}</td>
+            <td>{{ line.fromwards }}</td>
+            <td>{{ line.towards }}</td>
+            <td>{{ line.peakHeadway }} minutos</td>
         </tr>
     </model-table>
 </card>

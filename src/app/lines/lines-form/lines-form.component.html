@@ -32,10 +32,83 @@
                 <input name="towards" placeholder="Destino" class="form-control" [(ngModel)]="line.towards"
                     #name="ngModel" required />
             </div>
+
+            <div class="form-group col-md-12">
+                <select name="company" class="form-control" [(ngModel)]="line.company" #name="ngModel" required>
+                    <option *ngFor="let company of companies" [ngValue]="company">{{ company.name }}</option>
+                </select>
+            </div>
         </div>
     </card>
 
+    <div class="card-deck">
+        <card title="Pontos de interesse">
+            <div class="card-body row">
+                <div class="form-group col-md-12">
+                    <div class="input-group">
+                        <input name="interestPoint" placeholder="Adicionar ponto" class="form-control" [ngModel]=""
+                            #interestPoint="ngModel" />
+                        <div class="input-group-append">
+                            <a class="btn btn-primary" (click)="onAddInterestPoint(interestPoint.value)">
+                                <i class="fas fa-plus text-white"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="form-group col-md-12">
+                    <badge *ngFor="let item of line.interestPoints"
+                        [item]="item.name"
+                        (removeEvent)="onRemoveInterestPoint($event)"></badge>
+                </h3>
+            </div>
+        </card>
+        
+        <card title="Bairros percorridos">
+            <div class="card-body row">
+                <div class="form-group col-md-12">
+                    <div class="input-group">
+                        <input name="place" placeholder="Adicionar bairro" class="form-control" [ngModel]=""
+                            #place="ngModel" />
+                        <div class="input-group-append">
+                            <a class="btn btn-primary" (click)="onAddPlace(place.value)">
+                                <i class="fas fa-plus text-white"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="form-group col-md-12">
+                    <badge *ngFor="let item of line.places"
+                        [item]="item.name"
+                        (removeEvent)="onRemovePlace($event)"></badge>
+                </h3>
+            </div>
+        </card>
+
+        <card title="Tipos de veículos alocados">
+            <div class="card-body row">
+                <div class="form-group col-md-12">
+                    <div class="input-group">
+                        <select name="vehicles" class="form-control" #vehicleType required>
+                            <option *ngFor="let vehicleType of vehicleTypes" [ngValue]="vehicle">{{ vehicleType.name }}</option>
+                        </select>
+                        <div class="input-group-append">
+                            <a class="btn btn-primary" (click)="onAddVehicle(vehicleType.value)">
+                                <i class="fas fa-plus text-white"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="form-group col-md-12">
+                    <badge *ngFor="let vehicle of line.vehicles"
+                        [item]="vehicle.name"
+                        (removeEvent)="onRemoveVehicle($event)"></badge>
+                </h3>
+            </div>
+        </card>
+    </div>
+
     <div class="form-group col-md-12 text-center">
+        <reset-button (click)="resetForm(form)"></reset-button>
         <button submit-button 
             [modelId]="line.id"
             [disabled]="!form.valid"></button>
