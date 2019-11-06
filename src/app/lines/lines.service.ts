@@ -16,7 +16,7 @@ export class LinesService {
   }
 
   async getByLineName(lineName: string): Promise<Line> {
-    return this.httpService.getById<Line>(`${this.urn}/${lineName}`);
+    return this.httpService.getOne<Line>(`${this.urn}/${lineName}`);
   }
 
   async getAll(): Promise<Line[]> {

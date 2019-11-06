@@ -1,0 +1,25 @@
+<heading title="Dashboard">
+    <loading-spinner *ngIf="isLoading"></loading-spinner>
+</heading>
+
+<failure-message></failure-message>
+
+<div class="card-deck">
+    <scoreboard title="Linhas"
+        [score]="dashboard.lines"
+        link="/linhas"
+        icon="fas fa-tags"
+        color="primary"></scoreboard>
+    
+    <scoreboard title="Empresas"
+        [score]="dashboard.companies"
+        link="/empresas"
+        icon="fas fa-building"
+        color="info"></scoreboard>
+
+    <scoreboard title="Tipos de veículos"
+        [score]="dashboard.vehicles"
+        link="/veiculos"
+        icon="fas fa-bus"
+        color="secondary"></scoreboard>
+</div>

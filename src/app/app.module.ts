@@ -10,6 +10,7 @@ import { LinesModule } from './lines/lines.module';
 import { VehiclesModule } from './vehicles/vehicles.module';
 
 import { AppComponent } from './app.component';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { AppComponent } from './app.component';
     SharedModule,
     StructureModule,
     CompaniesModule,
+    DashboardModule,
     LinesModule,
     VehiclesModule
   ],

@@ -1,0 +1,8 @@
+a:hover {
+    text-decoration: none;
+}
+
+.scoreboard-container {
+    width: 1000%;
+    height: 1000% !important;
+}

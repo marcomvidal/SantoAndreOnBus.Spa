@@ -13,6 +13,7 @@ import { HeadingComponent } from './heading/heading.component';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { ModelTableComponent } from './model-table/model-table.component';
 import { ResetButtonComponent } from './reset-button/reset-button.component';
+import { ScoreboardComponent } from './scoreboard/scoreboard.component';
 import { SubmitButtonComponent } from './submit-button/submit-button.component';
 import { SuccessMessageComponent } from './success-message/success-message.component';
 
@@ -32,7 +33,8 @@ import { HttpService } from './http.service';
     ModelTableComponent,
     SubmitButtonComponent,
     SuccessMessageComponent,
-    ResetButtonComponent
+    ResetButtonComponent,
+    ScoreboardComponent
   ],
   imports: [
     CommonModule,
@@ -50,6 +52,7 @@ import { HttpService } from './http.service';
     LoadingSpinnerComponent,
     ModelTableComponent,
     ResetButtonComponent,
+    ScoreboardComponent,
     SubmitButtonComponent,
     SuccessMessageComponent
   ],

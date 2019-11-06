@@ -5,9 +5,11 @@ import { CompaniesIndexComponent } from './companies/companies-index/companies-i
 import { LinesIndexComponent } from './lines/lines-index/lines-index.component';
 import { LinesFormComponent } from './lines/lines-form/lines-form.component';
 import { VehiclesIndexComponent } from './vehicles/vehicles-index/vehicles-index.component';
+import { DashboardIndexComponent } from './dashboard/dashboard-index/dashboard-index.component';
 
 
 const routes: Routes = [
+  { path: 'dashboard',      component: DashboardIndexComponent },
   { path: 'linhas',         component: LinesIndexComponent },
   { path: 'linhas/criar',   component: LinesFormComponent },
   { path: 'linhas/:lineName',     component: LinesFormComponent },
