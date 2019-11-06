@@ -10,7 +10,7 @@ import { VehiclesIndexComponent } from './vehicles/vehicles-index/vehicles-index
 const routes: Routes = [
   { path: 'linhas',         component: LinesIndexComponent },
   { path: 'linhas/criar',   component: LinesFormComponent },
-  { path: 'linhas/:id',     component: LinesFormComponent },
+  { path: 'linhas/:lineName',     component: LinesFormComponent },
   { path: 'empresas',       component: CompaniesIndexComponent },
   { path: 'veiculos',       component: VehiclesIndexComponent }
 ];

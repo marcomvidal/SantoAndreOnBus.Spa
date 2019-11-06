@@ -30,8 +30,7 @@ export class LinesFormComponent implements OnInit {
   constructor(private service: LinesService,
               private companyService: CompaniesService,
               private vehicleService: VehiclesService,
-              private route: ActivatedRoute
-              ) {}
+              private route: ActivatedRoute) {}
   
   async ngOnInit() {
     await this.loadData();
@@ -42,9 +41,8 @@ export class LinesFormComponent implements OnInit {
     
     try {
       this.route.params.subscribe(async params => {
-        const id = params['id'];
-  
-        if (id) { this.line = await this.service.getById(id); }
+        const lineName = params['lineName'];
+        if (lineName) { this.line = await this.service.getByLineName(lineName); }
       });
 
       this.companies = await this.companyService.getAll();
@@ -77,14 +75,17 @@ export class LinesFormComponent implements OnInit {
 
   onRemoveVehicle(vehicleType: string) {
     const vehicle: Vehicle = this.vehicleTypes.filter(v => v.name == vehicleType)[0];
-    this.line.vehicles = this.line.vehicles.filter(v => v != vehicle);
+    this.line.vehicles = this.line.vehicles.filter(v => v.id != vehicle.id);
   }
 
   async onSubmit(form: NgForm): Promise<void> {
+    this.successMessage.onHide();
+    this.failureMessage.onHide();
+
     this.commitChangesAndFeedback({
-      transactions: async () => //this.newCompany.id == null ?
-          await this.service.save(this.line), //:
-          //await this.service.update(this.newCompany),
+      transactions: async () => this.line.id == null ?
+          await this.service.save(this.line) :
+          await this.service.update(this.line),
       onSuccess: () => {
         this.isEditing = false;
         this.successMessage.onShow("A linha foi salva com sucesso.");
@@ -109,6 +110,7 @@ export class LinesFormComponent implements OnInit {
       onSuccess();
       window.scrollTo(0, 0);
     } catch (e) {
+      console.log(e);
       this.isLoading = false;
 
       if (e.status == 400) {this.failureMessage.showFormErrors(e.error.errors);}

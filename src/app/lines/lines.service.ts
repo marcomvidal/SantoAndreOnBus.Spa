@@ -15,8 +15,8 @@ export class LinesService {
     this.urn = environment.urn + '/lines';
   }
 
-  async getById(id: number): Promise<Line> {
-    return this.httpService.getById<Line>(`${this.urn}/${id}`);
+  async getByLineName(lineName: string): Promise<Line> {
+    return this.httpService.getById<Line>(`${this.urn}/${lineName}`);
   }
 
   async getAll(): Promise<Line[]> {
@@ -25,6 +25,10 @@ export class LinesService {
 
   async save(line: Line): Promise<Object> {
     return this.httpService.save<Line>(this.urn, line);
+  }
+
+  async update(line: Line): Promise<Object> {
+    return this.httpService.update<Line>(line, this.urn, `${line.letter}-${line.number}`);
   }
 
   async delete(line: Line): Promise<Object> {

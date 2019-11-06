@@ -10,16 +10,16 @@
         <div class="card-body row">
             <div class="form-group col-md-4">
                 <input name="letter" placeholder="Letra" class="form-control" [(ngModel)]="line.letter"
-                    #name="ngModel" required maxlength="2" />
+                    #name="ngModel" required maxlength="2" [disabled]="line.id != null" />
             </div>
 
             <div class="form-group col-md-4">
                 <input name="number" placeholder="Número" class="form-control" [(ngModel)]="line.number"
-                    #name="ngModel" required maxlength="3" />
+                    #name="ngModel" required maxlength="3" [disabled]="line.id != null" />
             </div>
 
             <div class="form-group col-md-4">
-                <input name="peakHeadway" placeholder="Intervalo de pico" class="form-control" [(ngModel)]="line.peakHeadway"
+                <input name="peakHeadway" placeholder="Intervalo de pico (em minutos)" class="form-control" [(ngModel)]="line.peakHeadway"
                     #name="ngModel" required />
             </div>
 
@@ -33,9 +33,15 @@
                     #name="ngModel" required />
             </div>
 
+            
+        </div>
+    </card>
+
+    <card title="Empresa operadora">
+        <div class="card-body row">
             <div class="form-group col-md-12">
-                <select name="company" class="form-control" [(ngModel)]="line.company" #name="ngModel" required>
-                    <option *ngFor="let company of companies" [ngValue]="company">{{ company.name }}</option>
+                <select name="company" class="form-control" [(ngModel)]="line.companyId" #name="ngModel" required>
+                    <option *ngFor="let company of companies" [value]="company.id">{{ company.name }}</option>
                 </select>
             </div>
         </div>
