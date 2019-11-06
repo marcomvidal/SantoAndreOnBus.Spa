@@ -30,12 +30,12 @@ export class HttpService {
     return this.http.post<T>(urn, model, headers).toPromise();
   }
 
-  async update<T>(model: T, urn: string, id: number): Promise<Object> {
+  async update<T>(model: T, urn: string, id: any): Promise<Object> {
     const token: string = await this.getToken();
     const headers = {headers: this.getHeadersForJson(token)};
     const url = `${urn}/${id}`;
     
-    return this.http.patch<T>(url, model, headers).toPromise();
+    return this.http.put<T>(url, model, headers).toPromise();
   }
 
   async delete(urn: string, id: number): Promise<Object> {

@@ -44,6 +44,9 @@ export class CompaniesIndexComponent {
   }
 
   async onSubmit(form: NgForm): Promise<void> {
+    this.successMessage.onHide();
+    this.failureMessage.onHide();
+    
     this.commitChangesAndFeedback({
       transactions: async () => this.newCompany.id == null ?
           await this.service.save(this.newCompany) :

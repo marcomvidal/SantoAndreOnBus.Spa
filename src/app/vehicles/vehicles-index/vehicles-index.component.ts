@@ -35,11 +35,18 @@ export class VehiclesIndexComponent implements OnInit {
   }
 
   async onSubmit(form: NgForm): Promise<void> {
+    this.successMessage.onHide();
+    this.failureMessage.onHide();
+    
     this.commitChangesAndFeedback({
       transactions: async () => this.newVehicle.id == null ?
           await this.service.save(this.newVehicle) :
           await this.service.update(this.newVehicle),
-      onSuccess: () => {this.successMessage.onShow("O veículo foi salvo com sucesso."); form.reset();},
+      onSuccess: () => {
+        this.isEditing = false;
+        this.successMessage.onShow("O veículo foi salvo com sucesso.");
+        form.reset();
+      }
     });
   }
 
