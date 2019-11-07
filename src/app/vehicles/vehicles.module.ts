@@ -21,4 +21,4 @@ import { VehiclesService } from './vehicles.service';
     VehiclesService
   ]
 })
-export class VehiclesModule { }
+export class VehiclesModule {}

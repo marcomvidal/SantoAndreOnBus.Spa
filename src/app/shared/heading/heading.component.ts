@@ -9,7 +9,7 @@ export class HeadingComponent implements OnInit {
 
   @Input() title: string;
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 }

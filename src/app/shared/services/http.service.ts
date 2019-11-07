@@ -7,34 +7,34 @@ import { environment } from 'src/environments/environment';
 })
 export class HttpService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   async getOne<T>(urn: string): Promise<T> {
     const token: string = await this.getToken();
-    const headers = {headers: this.getHeadersForJson(token)};
+    const headers = { headers: this.getHeadersForJson(token) };
 
     return this.http.get<T>(urn, headers).toPromise();
   }
 
   async getAll<T>(urn: string): Promise<T[]> {
     const token: string = await this.getToken();
-    const headers = {headers: this.getHeadersForJson(token)};
+    const headers = { headers: this.getHeadersForJson(token) };
 
     return this.http.get<T[]>(urn, headers).toPromise();
   }
 
   async save<T>(urn: string, model: T): Promise<Object> {
     const token: string = await this.getToken();
-    const headers = {headers: this.getHeadersForJson(token)};
+    const headers = { headers: this.getHeadersForJson(token) };
 
     return this.http.post<T>(urn, model, headers).toPromise();
   }
 
   async update<T>(model: T, urn: string, id: any): Promise<Object> {
     const token: string = await this.getToken();
-    const headers = {headers: this.getHeadersForJson(token)};
+    const headers = { headers: this.getHeadersForJson(token) };
     const url = `${urn}/${id}`;
-    
+
     return this.http.put<T>(url, model, headers).toPromise();
   }
 
@@ -48,10 +48,10 @@ export class HttpService {
   private async getToken(): Promise<string> {
     const url: string = environment.urn + '/authentication/login';
 
-    return this.http.post(url, 
+    return this.http.post(url,
       this.getCredentials(),
-      {headers: this.getHeadersForJson(), responseType: 'text'})
-        .toPromise();
+      { headers: this.getHeadersForJson(), responseType: 'text' })
+      .toPromise();
   }
 
   private getCredentials(): string {
@@ -63,15 +63,15 @@ export class HttpService {
 
   private getHeadersForJson(token?: string): HttpHeaders {
     return token != null ?
-      new HttpHeaders({'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`})
+      new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` })
       :
-      new HttpHeaders({'Content-Type': 'application/json'});
+      new HttpHeaders({ 'Content-Type': 'application/json' });
   }
 
   private getHeadersForPlainText(token?: string): Object {
     return token != null ?
-      {headers: new HttpHeaders({'Authorization': `Bearer ${token}`}), responseType: "text" as "json"}
+      { headers: new HttpHeaders({ 'Authorization': `Bearer ${token}` }), responseType: "text" as "json" }
       :
-      {headers: new HttpHeaders({'Authorization': `Bearer ${token}`}), responseType: "text" as "json"};
+      { headers: new HttpHeaders({ 'Authorization': `Bearer ${token}` }), responseType: "text" as "json" };
   }
 }

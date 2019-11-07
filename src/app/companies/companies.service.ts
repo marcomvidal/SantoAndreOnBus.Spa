@@ -1,7 +1,6 @@
-import { Company } from './Company';
+import { Company } from '../models/Company';
 import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { HttpService } from '../shared/services/http.service';
 
 @Injectable({
@@ -11,7 +10,7 @@ export class CompaniesService {
 
   private urn: string;
 
-  constructor(private http: HttpClient, private httpService: HttpService) {
+  constructor(private httpService: HttpService) {
     this.urn = environment.urn + '/companies';
   }
 

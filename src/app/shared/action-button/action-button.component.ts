@@ -11,7 +11,7 @@ export class ActionButtonComponent implements OnInit {
   @Input() label: string;
   @Input() route: string;
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 }

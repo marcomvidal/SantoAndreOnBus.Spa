@@ -10,7 +10,7 @@ export class SuccessMessageComponent implements OnInit {
   @Input() description: string;
   @Input() isHidden: boolean;
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     this.onHide();

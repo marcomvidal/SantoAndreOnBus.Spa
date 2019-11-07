@@ -22,4 +22,4 @@ import { TopBarComponent } from './top-bar/top-bar.component';
     TopBarComponent
   ]
 })
-export class StructureModule { }
+export class StructureModule {}

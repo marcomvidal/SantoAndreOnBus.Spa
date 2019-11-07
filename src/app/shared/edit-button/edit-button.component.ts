@@ -9,7 +9,5 @@ export class EditButtonComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() { }
 }

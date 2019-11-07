@@ -1,7 +1,7 @@
-import { Company } from '../companies/Company';
+import { Company } from './Company';
 import { InterestPoint } from './InterestPoint';
 import { Place } from './Place';
-import { Vehicle } from '../vehicles/Vehicle';
+import { Vehicle } from './Vehicle';
 
 export class Line {
     id?: number;
@@ -17,8 +17,8 @@ export class Line {
     vehicles: Vehicle[];
 
     constructor(id?: number, letter?: string, number?: string, fromwards?: string,
-                towards?: string, peakHeadway?: number, company?: Company, companyId?: number,
-                interestPoints?: InterestPoint[], places?: Place[], vehicles?: Vehicle[]) {
+        towards?: string, peakHeadway?: number, company?: Company, companyId?: number,
+        interestPoints?: InterestPoint[], places?: Place[], vehicles?: Vehicle[]) {
         this.id = id;
         this.letter = letter;
         this.number = number;

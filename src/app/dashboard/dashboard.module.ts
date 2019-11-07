@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
-
 import { DashboardIndexComponent } from './dashboard-index/dashboard-index.component';
 import { DashboardService } from './dashboard.service';
 
@@ -17,7 +16,7 @@ import { DashboardService } from './dashboard.service';
   exports: [
     DashboardIndexComponent
   ],
-  providers : [
+  providers: [
     DashboardService
   ]
 })

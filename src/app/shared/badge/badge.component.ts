@@ -10,9 +10,9 @@ export class BadgeComponent implements OnInit {
   @Input() item: string;
   @Output() removeEvent: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   onRemove(): void {
     this.removeEvent.emit(this.item);

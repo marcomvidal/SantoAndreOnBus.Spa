@@ -1,16 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Line } from '../Line';
-import { NgForm } from '@angular/forms';
-import { InterestPoint } from '../InterestPoint';
-import { CompaniesService } from 'src/app/companies/companies.service';
-import { Company } from 'src/app/companies/Company';
-import { FailureMessageComponent } from 'src/app/shared/failure-message/failure-message.component';
-import { Vehicle } from 'src/app/vehicles/Vehicle';
-import { VehiclesService } from 'src/app/vehicles/vehicles.service';
-import { Place } from '../Place';
-import { LinesService } from '../lines.service';
-import { SuccessMessageComponent } from 'src/app/shared/success-message/success-message.component';
 import { ActivatedRoute } from '@angular/router';
+import { NgForm } from '@angular/forms';
+import { Company } from 'src/app/models/Company';
+import { InterestPoint } from '../../models/InterestPoint';
+import { Line } from '../../models/Line';
+import { Place } from '../../models/Place';
+import { Vehicle } from 'src/app/models/Vehicle';
+import { CompaniesService } from 'src/app/companies/companies.service';
+import { LinesService } from '../lines.service';
+import { VehiclesService } from 'src/app/vehicles/vehicles.service';
+import { FailureMessageComponent } from 'src/app/shared/failure-message/failure-message.component';
+import { SuccessMessageComponent } from 'src/app/shared/success-message/success-message.component';
 
 @Component({
   selector: 'app-lines-form',
@@ -24,21 +24,21 @@ export class LinesFormComponent implements OnInit {
   vehicleTypes: Vehicle[];
   isLoading: boolean = true;
   isEditing: boolean = true;
-  @ViewChild(SuccessMessageComponent, {static: false}) successMessage: SuccessMessageComponent;
-  @ViewChild(FailureMessageComponent, {static: false}) failureMessage: FailureMessageComponent;
+  @ViewChild(SuccessMessageComponent, { static: false }) successMessage: SuccessMessageComponent;
+  @ViewChild(FailureMessageComponent, { static: false }) failureMessage: FailureMessageComponent;
 
   constructor(private service: LinesService,
-              private companyService: CompaniesService,
-              private vehicleService: VehiclesService,
-              private route: ActivatedRoute) {}
-  
+    private companyService: CompaniesService,
+    private vehicleService: VehiclesService,
+    private route: ActivatedRoute) { }
+
   async ngOnInit() {
     await this.loadData();
   }
 
   async loadData() {
     this.line = new Line();
-    
+
     try {
       this.route.params.subscribe(async params => {
         const lineName = params['lineName'];
@@ -47,8 +47,8 @@ export class LinesFormComponent implements OnInit {
 
       this.companies = await this.companyService.getAll();
       this.vehicleTypes = await this.vehicleService.getAll();
-    } catch (e) {this.failureMessage.showConnectivityError();}
-    
+    } catch (e) { this.failureMessage.showConnectivityError(); }
+
     this.isLoading = false;
   }
 
@@ -84,8 +84,8 @@ export class LinesFormComponent implements OnInit {
 
     this.commitChangesAndFeedback({
       transactions: async () => this.line.id == null ?
-          await this.service.save(this.line) :
-          await this.service.update(this.line),
+        await this.service.save(this.line) :
+        await this.service.update(this.line),
       onSuccess: () => {
         this.isEditing = false;
         this.successMessage.onShow("A linha foi salva com sucesso.");
@@ -101,8 +101,8 @@ export class LinesFormComponent implements OnInit {
   }
 
   private async commitChangesAndFeedback(
-    {transactions, onSuccess}:
-    {transactions: () => Promise<Object>, onSuccess: () => void}) {
+    { transactions, onSuccess }:
+      { transactions: () => Promise<Object>, onSuccess: () => void }) {
     try {
       this.isLoading = true;
       await transactions();
@@ -113,8 +113,8 @@ export class LinesFormComponent implements OnInit {
       console.log(e);
       this.isLoading = false;
 
-      if (e.status == 400) {this.failureMessage.showFormErrors(e.error.errors);}
-      else {this.failureMessage.showConnectivityError();}
+      if (e.status == 400) { this.failureMessage.showFormErrors(e.error.errors); }
+      else { this.failureMessage.showConnectivityError(); }
     }
   }
 }

@@ -12,7 +12,7 @@ export class FailureMessageComponent implements OnInit {
   @Input() validationErrors: AspNetCoreErrors;
   @Input() isHidden: boolean;
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     this.onHide();

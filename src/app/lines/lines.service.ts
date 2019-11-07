@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { HttpService } from '../shared/services/http.service';
 import { environment } from 'src/environments/environment';
-import { Line } from './Line';
+import { Line } from '../models/Line';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +10,7 @@ export class LinesService {
 
   private urn: string;
 
-  constructor(private http: HttpClient, private httpService: HttpService) {
+  constructor(private httpService: HttpService) {
     this.urn = environment.urn + '/lines';
   }
 
