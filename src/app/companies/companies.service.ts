@@ -2,7 +2,7 @@ import { Company } from './Company';
 import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { HttpService } from '../shared/http.service';
+import { HttpService } from '../shared/services/http.service';
 
 @Injectable({
   providedIn: 'root'

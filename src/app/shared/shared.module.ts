@@ -17,7 +17,7 @@ import { ScoreboardComponent } from './scoreboard/scoreboard.component';
 import { SubmitButtonComponent } from './submit-button/submit-button.component';
 import { SuccessMessageComponent } from './success-message/success-message.component';
 
-import { HttpService } from './http.service';
+import { HttpService } from './services/http.service';
 
 @NgModule({
   declarations: [
