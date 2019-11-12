@@ -20,7 +20,9 @@ export class AuthService {
 
   async login(credential: Credential): Promise<Token> {
     const authentication: Token = await this.http.post<Token>(this.url, credential).toPromise();
+    localStorage.setItem('tokenExpiration', this.calculateTokenExpiration());
     localStorage.setItem('token', authentication.token);
+    localStorage.setItem('username', credential.email);
     this.isLogged = true;
     this.showMenuEmitter.emit(this.isLogged);
 
@@ -28,10 +30,18 @@ export class AuthService {
   }
 
   async logoff(): Promise<void> {
-    localStorage.removeItem('token');
+    localStorage.clear();
     this.isLogged = false;
     this.showMenuEmitter.emit(this.isLogged);
+
     this.router.navigate(['/login']);
+  }
+
+  calculateTokenExpiration(): string {
+    const tokenExpiration = new Date();
+    tokenExpiration.setHours(tokenExpiration.getHours() + 1);
+
+    return tokenExpiration.toString();
   }
 
   getToken(): string {

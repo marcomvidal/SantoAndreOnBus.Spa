@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
@@ -8,9 +8,13 @@ import { AuthService } from 'src/app/auth/auth.service';
 })
 export class TopBarComponent implements OnInit {
 
-  constructor(private service: AuthService) {}
+  username: string;
 
-  ngOnInit() {}
+  constructor(private service: AuthService) {
+    this.username = localStorage.getItem('username');
+  }
+
+  ngOnInit() { }
 
   logoff(): void {
     this.service.logoff();
