@@ -1,11 +1,24 @@
-<div id="wrapper">
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+
+<!-- Layouts depending if it is logged or not -->
+<div *ngIf="!isLogged">
+    <router-outlet></router-outlet>
+
+    <footer-bar></footer-bar>
+</div>
+
+<div *ngIf="isLogged" id="wrapper">
     <ul side-link-bar></ul>
 
     <div id="content-wrapper" class="d-flex flex-column">
 
         <main id="content">
             <top-bar></top-bar>
-    
+
             <section class="container-fluid">
                 <router-outlet></router-outlet>
             </section>
@@ -13,10 +26,4 @@
 
         <footer-bar></footer-bar>
     </div>
-
 </div>
-
-<!-- Scroll to Top Button-->
-<a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-</a>

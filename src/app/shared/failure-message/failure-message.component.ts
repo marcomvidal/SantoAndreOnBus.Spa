@@ -24,6 +24,8 @@ export class FailureMessageComponent implements OnInit {
 
   onShow(description: string, validationErrors?: Object): void {
     this.description = description;
+    this.validationErrors = null;
+    
     if (validationErrors != undefined) { this.validationErrors = new AspNetCoreErrors(validationErrors); }
     this.isHidden = false;
   }

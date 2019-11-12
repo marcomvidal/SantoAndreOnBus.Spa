@@ -110,7 +110,6 @@ export class LinesFormComponent implements OnInit {
       onSuccess();
       window.scrollTo(0, 0);
     } catch (e) {
-      console.log(e);
       this.isLoading = false;
 
       if (e.status == 400) { this.failureMessage.showFormErrors(e.error.errors); }

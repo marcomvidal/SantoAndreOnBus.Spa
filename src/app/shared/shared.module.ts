@@ -17,8 +17,6 @@ import { ScoreboardComponent } from './scoreboard/scoreboard.component';
 import { SubmitButtonComponent } from './submit-button/submit-button.component';
 import { SuccessMessageComponent } from './success-message/success-message.component';
 
-import { HttpService } from './services/http.service';
-
 @NgModule({
   declarations: [
     ActionButtonComponent,
@@ -55,9 +53,6 @@ import { HttpService } from './services/http.service';
     ScoreboardComponent,
     SubmitButtonComponent,
     SuccessMessageComponent
-  ],
-  providers: [
-    HttpService
   ]
 })
 export class SharedModule { }

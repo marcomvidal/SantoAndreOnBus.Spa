@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from '../shared/services/http.service';
 import { environment } from 'src/environments/environment';
 import { Line } from '../models/Line';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -10,27 +10,27 @@ export class LinesService {
 
   private urn: string;
 
-  constructor(private httpService: HttpService) {
+  constructor(private http: HttpClient) {
     this.urn = environment.urn + '/lines';
   }
 
   async getByLineName(lineName: string): Promise<Line> {
-    return this.httpService.getOne<Line>(`${this.urn}/${lineName}`);
+    return this.http.get<Line>(`${this.urn}/${lineName}`).toPromise();
   }
 
   async getAll(): Promise<Line[]> {
-    return this.httpService.getAll<Line>(this.urn);
+    return this.http.get<Line[]>(this.urn).toPromise();
   }
 
   async save(line: Line): Promise<Object> {
-    return this.httpService.save<Line>(this.urn, line);
+    return this.http.post<Line>(this.urn, line).toPromise();
   }
 
   async update(line: Line): Promise<Object> {
-    return this.httpService.update<Line>(line, this.urn, `${line.letter}-${line.number}`);
+    return this.http.put<Line>(`${this.urn}/${line.id}`, line).toPromise();
   }
 
   async delete(line: Line): Promise<Object> {
-    return this.httpService.delete(this.urn, line.id);
+    return this.http.delete(`${this.urn}/${line.id}`, { responseType: 'text' as 'json'}).toPromise();
   }
 }
