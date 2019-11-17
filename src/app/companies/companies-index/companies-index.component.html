@@ -51,7 +51,7 @@
             </td>
             <td>{{ company.name }}</td>
             <td>
-                <span *ngFor="let prefix of company.prefixes; index as i; trackBy: trackByFn">
+                <span *ngFor="let prefix of company.prefixes; index as i">
                     {{ prefix.number }}<span *ngIf="i < company.prefixes.length - 1">, </span>
                 </span>
             </td>
