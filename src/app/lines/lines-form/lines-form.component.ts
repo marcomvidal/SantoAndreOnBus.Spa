@@ -1,23 +1,27 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { take } from 'rxjs/operators';
 import { Company } from 'src/app/models/Company';
 import { InterestPoint } from '../../models/InterestPoint';
 import { Line } from '../../models/Line';
 import { Place } from '../../models/Place';
 import { Vehicle } from 'src/app/models/Vehicle';
+import { FailureMessageComponent } from 'src/app/shared/failure-message/failure-message.component';
+import { SuccessMessageComponent } from 'src/app/shared/success-message/success-message.component';
+import { SubmitableForm } from 'src/app/common-component-tasks/SubmitableForm';
 import { CompaniesService } from 'src/app/companies/companies.service';
 import { LinesService } from '../lines.service';
 import { VehiclesService } from 'src/app/vehicles/vehicles.service';
-import { FailureMessageComponent } from 'src/app/shared/failure-message/failure-message.component';
-import { SuccessMessageComponent } from 'src/app/shared/success-message/success-message.component';
+import { CommonComponentTasksService } from 'src/app/common-component-tasks/common-component-tasks.service';
+
 
 @Component({
   selector: 'app-lines-form',
   templateUrl: './lines-form.component.html',
   styleUrls: ['./lines-form.component.css']
 })
-export class LinesFormComponent implements OnInit {
+export class LinesFormComponent implements OnInit, SubmitableForm {
 
   line: Line;
   companies: Company[];
@@ -30,24 +34,31 @@ export class LinesFormComponent implements OnInit {
   constructor(private service: LinesService,
     private companyService: CompaniesService,
     private vehicleService: VehiclesService,
+    private componentService: CommonComponentTasksService,
     private route: ActivatedRoute) { }
 
-  async ngOnInit() {
-    await this.loadData();
+  ngOnInit() {
+    this.loadData();
   }
 
-  async loadData() {
+  loadData() {
     this.line = new Line();
 
-    try {
-      this.route.params.subscribe(async params => {
-        const lineName = params['lineName'];
-        if (lineName) { this.line = await this.service.getByLineName(lineName); }
-      });
+    this.route.params.subscribe(params => {
+      if (params['lineName']) { 
+        this.service.getByLineName(params['lineName'])
+          .pipe(take(1))
+          .subscribe(line => this.line = line);
+      }
+    });
 
-      this.companies = await this.companyService.getAll();
-      this.vehicleTypes = await this.vehicleService.getAll();
-    } catch (e) { this.failureMessage.showConnectivityError(); }
+    this.companyService.getAll()
+      .pipe(take(1))
+      .subscribe(companies => this.companies = companies);
+    
+    this.vehicleService.getAll()
+      .pipe(take(1))
+      .subscribe(vehicleTypes => this.vehicleTypes = vehicleTypes);
 
     this.isLoading = false;
   }
@@ -73,19 +84,17 @@ export class LinesFormComponent implements OnInit {
     if (!this.line.vehicles.includes(vehicle)) { this.line.vehicles.push(vehicle); }
   }
 
-  onRemoveVehicle(vehicleType: string) {
-    const vehicle: Vehicle = this.vehicleTypes.filter(v => v.name == vehicleType)[0];
+  onRemoveVehicle($event: string) {
+    const vehicle: Vehicle = this.vehicleTypes.filter(v => v.name == $event)[0];
     this.line.vehicles = this.line.vehicles.filter(v => v.id != vehicle.id);
   }
 
   async onSubmit(form: NgForm): Promise<void> {
-    this.successMessage.onHide();
-    this.failureMessage.onHide();
-
-    this.commitChangesAndFeedback({
-      transactions: async () => this.line.id == null ?
-        await this.service.save(this.line) :
-        await this.service.update(this.line),
+    this.componentService.commitAndFeedback({
+      component: this,
+      transactions: () => this.line.id == null ?
+        this.service.save(this.line) :
+        this.service.update(this.line),
       onSuccess: () => {
         this.isEditing = false;
         this.successMessage.onShow("A linha foi salva com sucesso.");
@@ -95,25 +104,7 @@ export class LinesFormComponent implements OnInit {
   }
 
   resetForm(form: NgForm) {
-    form.resetForm(form.value);
-    this.isEditing = false;
+    this.componentService.prepareToResetForm(this, form);
     this.line = new Line();
-  }
-
-  private async commitChangesAndFeedback(
-    { transactions, onSuccess }:
-      { transactions: () => Promise<Object>, onSuccess: () => void }) {
-    try {
-      this.isLoading = true;
-      await transactions();
-      this.loadData();
-      onSuccess();
-      window.scrollTo(0, 0);
-    } catch (e) {
-      this.isLoading = false;
-
-      if (e.status == 400) { this.failureMessage.showFormErrors(e.error.errors); }
-      else { this.failureMessage.showConnectivityError(); }
-    }
   }
 }

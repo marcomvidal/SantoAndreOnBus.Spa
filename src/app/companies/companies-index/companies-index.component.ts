@@ -1,17 +1,21 @@
 import { Component, ViewChild } from '@angular/core';
-import { Company } from '../../models/Company';
-import { CompaniesService } from '../companies.service';
-import { FailureMessageComponent } from 'src/app/shared/failure-message/failure-message.component';
 import { NgForm } from '@angular/forms';
+import { take } from 'rxjs/operators';
+import { Company } from '../../models/Company';
 import { Prefix } from '../../models/Prefix';
+import { FailureMessageComponent } from 'src/app/shared/failure-message/failure-message.component';
 import { SuccessMessageComponent } from 'src/app/shared/success-message/success-message.component';
+import { SubmitableForm } from 'src/app/common-component-tasks/SubmitableForm';
+import { CompaniesService } from '../companies.service';
+import { CommonComponentTasksService } from 'src/app/common-component-tasks/common-component-tasks.service';
+
 
 @Component({
   selector: 'app-companies-index',
   templateUrl: './companies-index.component.html',
   styleUrls: ['./companies-index.component.css']
 })
-export class CompaniesIndexComponent {
+export class CompaniesIndexComponent implements SubmitableForm {
 
   newCompany: Company;
   companies: Company[];
@@ -20,17 +24,18 @@ export class CompaniesIndexComponent {
   @ViewChild(SuccessMessageComponent, { static: false }) successMessage: SuccessMessageComponent;
   @ViewChild(FailureMessageComponent, { static: false }) failureMessage: FailureMessageComponent;
 
-  constructor(private service: CompaniesService) { }
+  constructor(private service: CompaniesService, private componentService: CommonComponentTasksService) { }
 
-  async ngOnInit() {
-    await this.loadData();
+  ngOnInit() {
+    this.loadData();
   }
 
-  async loadData() {
+  loadData() {
     this.newCompany = new Company();
 
-    try { this.companies = await this.service.getAll(); }
-    catch (e) { this.failureMessage.showConnectivityError(); }
+    this.service.getAll()
+      .pipe(take(1))
+      .subscribe(companies => this.companies = companies, error => this.failureMessage.showConnectivityError());
 
     this.isLoading = false;
   }
@@ -44,54 +49,34 @@ export class CompaniesIndexComponent {
   }
 
   async onSubmit(form: NgForm): Promise<void> {
-    this.successMessage.onHide();
-    this.failureMessage.onHide();
-
-    this.commitChangesAndFeedback({
-      transactions: async () => this.newCompany.id == null ?
-        await this.service.save(this.newCompany) :
-        await this.service.update(this.newCompany),
+    this.componentService.commitAndFeedback({
+      component: this,
+      transactions: () => this.newCompany.id == null ?
+        this.service.save(this.newCompany) :
+        this.service.update(this.newCompany),
       onSuccess: () => {
         this.isEditing = false;
         this.successMessage.onShow("A empresa foi salva com sucesso.");
         form.reset();
       }
-    });
+    })
   }
 
-  async onEdit(company: Company) {
-    this.isEditing = true;
+  onEdit(company: Company) {
+    this.componentService.prepareToEdit(this);
     this.newCompany = company;
-    window.scrollTo(0, 0);
   }
 
-  resetForm(form: NgForm) {
-    form.resetForm(form.value);
-    this.isEditing = false;
+  onReset(form: NgForm) {
+    this.componentService.prepareToResetForm(this, form);
     this.newCompany = new Company();
   }
 
-  async onDelete(company: Company) {
-    this.commitChangesAndFeedback({
-      transactions: async () => await this.service.delete(company),
+  onDelete(company: Company) {
+    this.componentService.commitAndFeedback({
+      component: this,
+      transactions: () => this.service.delete(company),
       onSuccess: () => this.successMessage.onShow("A empresa foi excluída com sucesso.")
     });
-  }
-
-  private async commitChangesAndFeedback(
-    { transactions, onSuccess }:
-      { transactions: () => Promise<Object>, onSuccess: () => void }) {
-    try {
-      this.isLoading = true;
-      await transactions();
-      this.loadData();
-      onSuccess();
-      window.scrollTo(0, 0);
-    } catch (e) {
-      this.isLoading = false;
-
-      if (e.status == 400) { this.failureMessage.showFormErrors(e.error.errors); }
-      else { this.failureMessage.showConnectivityError(); }
-    }
   }
 }

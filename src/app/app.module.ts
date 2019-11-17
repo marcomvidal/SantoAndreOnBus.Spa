@@ -15,6 +15,7 @@ import { StructureModule } from './structure/structure.module';
 import { AuthService } from './auth/auth.service';
 import { TokenInterceptorService } from './auth/token-interceptor.service';
 import { AuthGuard } from './auth/auth.guard';
+import { CommonComponentTasksService } from './common-component-tasks/common-component-tasks.service';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { AuthGuard } from './auth/auth.guard';
       useClass: TokenInterceptorService,
       multi: true,
     },
+    CommonComponentTasksService
   ],
   bootstrap: [AppComponent]
 })

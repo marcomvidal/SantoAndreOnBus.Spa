@@ -2,6 +2,7 @@ import { Company } from '../models/Company';
 import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,19 +15,19 @@ export class CompaniesService {
     this.urn = environment.urn + '/companies';
   }
 
-  async getAll(): Promise<Company[]> {
-    return this.http.get<Company[]>(this.urn).toPromise();
+  getAll(): Observable<Company[]> {
+    return this.http.get<Company[]>(this.urn);
   }
 
-  async save(company: Company): Promise<Object> {
-    return this.http.post<Company>(this.urn, company).toPromise();
+  save(company: Company): Observable<Object> {
+    return this.http.post<Company>(this.urn, company);
   }
 
-  async update(company: Company): Promise<Object> {
-    return this.http.put<Company>(`${this.urn}/${company.id}`, company).toPromise();
+  update(company: Company): Observable<Object> {
+    return this.http.put<Company>(`${this.urn}/${company.id}`, company);
   }
 
-  async delete(company: Company): Promise<Object> {
-    return this.http.delete(`${this.urn}/${company.id}`, { responseType: 'text' as 'json'}).toPromise();
+  delete(company: Company): Observable<Object> {
+    return this.http.delete(`${this.urn}/${company.id}`, { responseType: 'text' as 'json'});
   }
 }

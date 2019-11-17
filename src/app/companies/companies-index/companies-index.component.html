@@ -32,7 +32,7 @@
             </h3>
             
             <div class="form-group col-md-12 text-center">
-                <reset-button (click)="resetForm(form)"></reset-button>
+                <reset-button (click)="onReset(form)"></reset-button>
                 <button submit-button 
                     [modelId]="newCompany.id"
                     [disabled]="!form.valid"></button>

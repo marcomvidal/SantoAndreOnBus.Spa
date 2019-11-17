@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Line } from '../models/Line';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,23 +15,23 @@ export class LinesService {
     this.urn = environment.urn + '/lines';
   }
 
-  async getByLineName(lineName: string): Promise<Line> {
-    return this.http.get<Line>(`${this.urn}/${lineName}`).toPromise();
+  getByLineName(lineName: string): Observable<Line> {
+    return this.http.get<Line>(`${this.urn}/${lineName}`);
   }
 
-  async getAll(): Promise<Line[]> {
-    return this.http.get<Line[]>(this.urn).toPromise();
+  getAll(): Observable<Line[]> {
+    return this.http.get<Line[]>(this.urn);
   }
 
-  async save(line: Line): Promise<Object> {
-    return this.http.post<Line>(this.urn, line).toPromise();
+  save(line: Line): Observable<Object> {
+    return this.http.post<Line>(this.urn, line);
   }
 
-  async update(line: Line): Promise<Object> {
-    return this.http.put<Line>(`${this.urn}/${line.id}`, line).toPromise();
+  update(line: Line): Observable<Object> {
+    return this.http.put<Line>(`${this.urn}/${line.id}`, line);
   }
 
-  async delete(line: Line): Promise<Object> {
-    return this.http.delete(`${this.urn}/${line.id}`, { responseType: 'text' as 'json'}).toPromise();
+  delete(line: Line): Observable<Object> {
+    return this.http.delete(`${this.urn}/${line.id}`, { responseType: 'text' as 'json'});
   }
 }

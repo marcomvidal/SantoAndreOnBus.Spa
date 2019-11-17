@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Dashboard } from '../models/Dashboard';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class DashboardService {
     this.urn = environment.urn + '/dashboard';
   }
 
-  async get(): Promise<Dashboard> {
-    return this.http.get<Dashboard>(this.urn).toPromise();
+  get(): Observable<Dashboard> {
+    return this.http.get<Dashboard>(this.urn);
   }
 }

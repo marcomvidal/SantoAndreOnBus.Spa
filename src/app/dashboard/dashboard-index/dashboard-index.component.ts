@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { take } from 'rxjs/operators';
 import { Dashboard } from '../../models/Dashboard';
-import { DashboardService } from '../dashboard.service';
 import { FailureMessageComponent } from 'src/app/shared/failure-message/failure-message.component';
+import { DashboardService } from '../dashboard.service';
+
 
 @Component({
   selector: 'app-dashboard-index',
@@ -16,16 +18,15 @@ export class DashboardIndexComponent implements OnInit {
 
   constructor(private service: DashboardService) { }
 
-  async ngOnInit() {
-    await this.loadData();
+  ngOnInit() {
+    this.loadData();
   }
 
-  async loadData() {
-    try {
-      this.dashboard = await this.service.get();
-    } catch (e) { this.failureMessage.showConnectivityError(); }
+  loadData() {
+    this.service.get()
+      .pipe(take(1))
+      .subscribe(dashboard => this.dashboard = dashboard, error => this.failureMessage.showConnectivityError());
 
     this.isLoading = false;
   }
-
 }

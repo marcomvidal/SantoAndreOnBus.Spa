@@ -1,56 +1,43 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { LinesService } from '../lines.service';
+import { take } from 'rxjs/operators';
 import { Line } from '../../models/Line';
+import { LinesService } from '../lines.service';
 import { FailureMessageComponent } from 'src/app/shared/failure-message/failure-message.component';
 import { SuccessMessageComponent } from 'src/app/shared/success-message/success-message.component';
+import { CommonComponentTasksService } from 'src/app/common-component-tasks/common-component-tasks.service';
+import { ListableResource } from 'src/app/common-component-tasks/ListableResource';
 
 @Component({
   selector: 'lines-index',
   templateUrl: './lines-index.component.html',
   styleUrls: ['./lines-index.component.css']
 })
-export class LinesIndexComponent implements OnInit {
+export class LinesIndexComponent implements OnInit, ListableResource {
 
   lines: Line[];
   isLoading: boolean = true;
   @ViewChild(FailureMessageComponent, { static: false }) failureMessage: FailureMessageComponent;
   @ViewChild(SuccessMessageComponent, { static: false }) successMessage: SuccessMessageComponent;
 
-  constructor(private service: LinesService) { }
+  constructor(private service: LinesService, private componentService: CommonComponentTasksService) { }
 
-  async ngOnInit() {
-    await this.loadData();
+  ngOnInit() {
+    this.loadData();
   }
 
-  async loadData() {
-    try {
-      this.lines = await this.service.getAll();
-    } catch (e) { this.failureMessage.showConnectivityError(); }
+  loadData() {
+    this.service.getAll()
+      .pipe(take(1))
+      .subscribe(lines => this.lines = lines, error => this.failureMessage.showConnectivityError())
 
     this.isLoading = false;
   }
 
   async onDelete(line: Line) {
-    this.commitChangesAndFeedback({
-      transactions: async () => await this.service.delete(line),
+    this.componentService.commitAndFeedback({
+      component: this,
+      transactions: () => this.service.delete(line),
       onSuccess: () => this.successMessage.onShow("A linha foi excluída com sucesso.")
     });
-  }
-
-  private async commitChangesAndFeedback(
-    { transactions, onSuccess }:
-      { transactions: () => Promise<Object>, onSuccess: () => void }) {
-    try {
-      this.isLoading = true;
-      await transactions();
-      this.loadData();
-      onSuccess();
-      window.scrollTo(0, 0);
-    } catch (e) {
-      this.isLoading = false;
-
-      if (e.status == 400) { this.failureMessage.showFormErrors(e.error.errors); }
-      else { this.failureMessage.showConnectivityError(); }
-    }
   }
 }

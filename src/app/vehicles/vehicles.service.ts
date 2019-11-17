@@ -2,6 +2,7 @@ import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Vehicle } from '../models/Vehicle';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,19 +15,19 @@ export class VehiclesService {
     this.urn = environment.urn + '/vehicles';
   }
 
-  async getAll(): Promise<Vehicle[]> {
-    return this.http.get<Vehicle[]>(this.urn).toPromise();
+  getAll(): Observable<Vehicle[]> {
+    return this.http.get<Vehicle[]>(this.urn);
   }
 
-  async save(vehicle: Vehicle): Promise<Object> {
-    return this.http.post<Vehicle>(this.urn, vehicle).toPromise();
+  save(vehicle: Vehicle): Observable<Object> {
+    return this.http.post<Vehicle>(this.urn, vehicle);
   }
 
-  async update(vehicle: Vehicle): Promise<Object> {
-    return this.http.put<Vehicle>(`${this.urn}/${vehicle.id}`, vehicle).toPromise();
+  update(vehicle: Vehicle): Observable<Object> {
+    return this.http.put<Vehicle>(`${this.urn}/${vehicle.id}`, vehicle);
   }
 
-  async delete(vehicle: Vehicle): Promise<Object> {
-    return this.http.delete(`${this.urn}/${vehicle.id}`, { responseType: 'text' as 'json'}).toPromise();
+  delete(vehicle: Vehicle): Observable<Object> {
+    return this.http.delete(`${this.urn}/${vehicle.id}`, { responseType: 'text' as 'json'});
   }
 }
