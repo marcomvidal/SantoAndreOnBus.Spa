@@ -28,7 +28,7 @@ export class LinesService {
   }
 
   update(line: Line): Observable<Object> {
-    return this.http.put<Line>(`${this.urn}/${line.id}`, line);
+    return this.http.put<Line>(`${this.urn}/${line.letter}-${line.number}`, line);
   }
 
   delete(line: Line): Observable<Object> {
