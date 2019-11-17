@@ -32,6 +32,7 @@ export class LoginFormComponent implements OnInit  {
   async onSubmit(form: NgForm) {
     this.successMessage.onHide();
     this.failureMessage.onHide();
+    this.isLoading = true;
 
     this.service.login(this.credential)
       .subscribe(success => {

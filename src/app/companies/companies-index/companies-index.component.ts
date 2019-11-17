@@ -35,9 +35,10 @@ export class CompaniesIndexComponent implements SubmitableForm {
 
     this.service.getAll()
       .pipe(take(1))
-      .subscribe(companies => this.companies = companies, error => this.failureMessage.showConnectivityError());
-
-    this.isLoading = false;
+      .subscribe(
+        companies => this.companies = companies,
+        error => this.failureMessage.showConnectivityError(),
+        () => this.isLoading = false);
   }
 
   onAddPrefix(prefix: string) {

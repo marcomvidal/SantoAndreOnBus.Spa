@@ -58,9 +58,10 @@ export class LinesFormComponent implements OnInit, SubmitableForm {
     
     this.vehicleService.getAll()
       .pipe(take(1))
-      .subscribe(vehicleTypes => this.vehicleTypes = vehicleTypes);
-
-    this.isLoading = false;
+      .subscribe(
+        vehicleTypes => this.vehicleTypes = vehicleTypes,
+        error => error,
+        () => this.isLoading = false);
   }
 
   onAddInterestPoint(interestPoint: string) {
@@ -82,6 +83,7 @@ export class LinesFormComponent implements OnInit, SubmitableForm {
   onAddVehicle(vehicleType: string) {
     const vehicle: Vehicle = this.vehicleTypes.filter(v => v.name == vehicleType)[0];
     if (!this.line.vehicles.includes(vehicle)) { this.line.vehicles.push(vehicle); }
+    console.log(this.line);
   }
 
   onRemoveVehicle($event: string) {
@@ -103,7 +105,7 @@ export class LinesFormComponent implements OnInit, SubmitableForm {
     });
   }
 
-  resetForm(form: NgForm) {
+  onReset(form: NgForm) {
     this.componentService.prepareToResetForm(this, form);
     this.line = new Line();
   }

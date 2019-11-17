@@ -25,8 +25,9 @@ export class DashboardIndexComponent implements OnInit {
   loadData() {
     this.service.get()
       .pipe(take(1))
-      .subscribe(dashboard => this.dashboard = dashboard, error => this.failureMessage.showConnectivityError());
-
-    this.isLoading = false;
+      .subscribe(
+        dashboard => this.dashboard = dashboard,
+        error => this.failureMessage.showConnectivityError(),
+        () => this.isLoading = false);
   }
 }

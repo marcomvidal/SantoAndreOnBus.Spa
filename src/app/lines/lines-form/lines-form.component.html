@@ -95,7 +95,7 @@
                 <div class="form-group col-md-12">
                     <div class="input-group">
                         <select name="vehicles" class="form-control" #vehicleType required>
-                            <option *ngFor="let vehicleType of vehicleTypes" [ngValue]="vehicleType">{{ vehicleType.name }}</option>
+                            <option *ngFor="let vehicleType of vehicleTypes">{{ vehicleType.name }}</option>
                         </select>
                         <div class="input-group-append">
                             <a class="btn btn-primary" (click)="onAddVehicle(vehicleType.value)">
@@ -114,7 +114,7 @@
     </div>
 
     <div class="form-group col-md-12 text-center">
-        <reset-button (click)="resetForm(form)"></reset-button>
+        <reset-button (click)="onReset(form)"></reset-button>
         <button submit-button 
             [modelId]="line.id"
             [disabled]="!form.valid"></button>

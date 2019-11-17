@@ -28,9 +28,10 @@ export class LinesIndexComponent implements OnInit, ListableResource {
   loadData() {
     this.service.getAll()
       .pipe(take(1))
-      .subscribe(lines => this.lines = lines, error => this.failureMessage.showConnectivityError())
-
-    this.isLoading = false;
+      .subscribe(
+        lines => this.lines = lines,
+        error => this.failureMessage.showConnectivityError(),
+        () => this.isLoading = false)
   }
 
   async onDelete(line: Line) {

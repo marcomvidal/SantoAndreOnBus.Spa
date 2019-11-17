@@ -34,9 +34,10 @@ export class VehiclesIndexComponent implements OnInit, SubmitableForm {
 
     this.service.getAll()
       .pipe(take(1))
-      .subscribe(vehicles => this.vehicles = vehicles, error => this.failureMessage.showConnectivityError());
-
-    this.isLoading = false;
+      .subscribe(
+        vehicles => this.vehicles = vehicles,
+        error => this.failureMessage.showConnectivityError(),
+        () => this.isLoading = false);
   }
 
   onSubmit(form: NgForm): void {
