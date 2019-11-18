@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { take } from 'rxjs/operators';
 import { Company } from 'src/app/models/Company';
 import { InterestPoint } from '../../models/InterestPoint';
 import { Line } from '../../models/Line';
@@ -46,18 +45,13 @@ export class LinesFormComponent implements OnInit, SubmitableForm {
 
     this.route.params.subscribe(params => {
       if (params['lineName']) { 
-        this.service.getByLineName(params['lineName'])
-          .pipe(take(1))
-          .subscribe(line => this.line = line);
+        this.service.getByLineName(params['lineName']).subscribe(line => this.line = line);
       }
     });
 
-    this.companyService.getAll()
-      .pipe(take(1))
-      .subscribe(companies => this.companies = companies);
+    this.companyService.getAll().subscribe(companies => this.companies = companies);
     
     this.vehicleService.getAll()
-      .pipe(take(1))
       .subscribe(
         vehicleTypes => this.vehicleTypes = vehicleTypes,
         error => error,
@@ -83,7 +77,6 @@ export class LinesFormComponent implements OnInit, SubmitableForm {
   onAddVehicle(vehicleType: string) {
     const vehicle: Vehicle = this.vehicleTypes.filter(v => v.name == vehicleType)[0];
     if (!this.line.vehicles.includes(vehicle)) { this.line.vehicles.push(vehicle); }
-    console.log(this.line);
   }
 
   onRemoveVehicle($event: string) {

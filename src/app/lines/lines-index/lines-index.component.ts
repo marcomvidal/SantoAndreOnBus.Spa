@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { take } from 'rxjs/operators';
 import { Line } from '../../models/Line';
 import { LinesService } from '../lines.service';
 import { FailureMessageComponent } from 'src/app/shared/failure-message/failure-message.component';
@@ -27,14 +26,13 @@ export class LinesIndexComponent implements OnInit, ListableResource {
 
   loadData() {
     this.service.getAll()
-      .pipe(take(1))
       .subscribe(
         lines => this.lines = lines,
         error => this.failureMessage.showConnectivityError(),
         () => this.isLoading = false)
   }
 
-  async onDelete(line: Line) {
+  onDelete(line: Line) {
     this.componentService.commitAndFeedback({
       component: this,
       transactions: () => this.service.delete(line),

@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { take } from 'rxjs/operators';
 import { Vehicle } from '../../models/Vehicle';
 import { FailureMessageComponent } from 'src/app/shared/failure-message/failure-message.component';
 import { SuccessMessageComponent } from 'src/app/shared/success-message/success-message.component';
@@ -33,7 +32,6 @@ export class VehiclesIndexComponent implements OnInit, SubmitableForm {
     this.newVehicle = new Vehicle();
 
     this.service.getAll()
-      .pipe(take(1))
       .subscribe(
         vehicles => this.vehicles = vehicles,
         error => this.failureMessage.showConnectivityError(),

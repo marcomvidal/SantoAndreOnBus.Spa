@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Vehicle } from '../models/Vehicle';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class VehiclesService {
   }
 
   getAll(): Observable<Vehicle[]> {
-    return this.http.get<Vehicle[]>(this.urn);
+    return this.http.get<Vehicle[]>(this.urn).pipe(take(1));
   }
 
   save(vehicle: Vehicle): Observable<Object> {

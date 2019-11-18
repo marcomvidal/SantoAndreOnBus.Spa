@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { take } from 'rxjs/operators';
 import { Dashboard } from '../../models/Dashboard';
 import { FailureMessageComponent } from 'src/app/shared/failure-message/failure-message.component';
 import { DashboardService } from '../dashboard.service';
@@ -24,7 +23,6 @@ export class DashboardIndexComponent implements OnInit {
 
   loadData() {
     this.service.get()
-      .pipe(take(1))
       .subscribe(
         dashboard => this.dashboard = dashboard,
         error => this.failureMessage.showConnectivityError(),

@@ -3,6 +3,7 @@ import { environment } from 'src/environments/environment';
 import { Dashboard } from '../models/Dashboard';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,6 @@ export class DashboardService {
   }
 
   get(): Observable<Dashboard> {
-    return this.http.get<Dashboard>(this.urn);
+    return this.http.get<Dashboard>(this.urn).pipe(take(1));
   }
 }

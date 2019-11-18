@@ -16,6 +16,10 @@
                                 <h1 class="h4 text-gray-900 mb-4">Seja bem-vindo!</h1>
                             </div>
 
+                            <div class="text-center mb-4 mt-1">
+                                <loading-spinner *ngIf="isLoading"></loading-spinner>
+                            </div>
+
                             <success-message></success-message>
                             <failure-message></failure-message>
 

@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { take } from 'rxjs/operators';
 import { Company } from '../../models/Company';
 import { Prefix } from '../../models/Prefix';
 import { FailureMessageComponent } from 'src/app/shared/failure-message/failure-message.component';
@@ -34,7 +33,6 @@ export class CompaniesIndexComponent implements SubmitableForm {
     this.newCompany = new Company();
 
     this.service.getAll()
-      .pipe(take(1))
       .subscribe(
         companies => this.companies = companies,
         error => this.failureMessage.showConnectivityError(),
