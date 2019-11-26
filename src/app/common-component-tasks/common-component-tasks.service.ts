@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { ListableResource } from './ListableResource';
 import { SubmitableForm } from './SubmitableForm';
+import { LoginFormComponent } from '../login/login-form/login-form.component';
 
 @Injectable({
   providedIn: 'root'
@@ -27,17 +28,19 @@ export class CommonComponentTasksService {
           onSuccess();
           window.scrollTo(0, 0);
         },
-        fail => {
-          component.isLoading = false;
+        fail => this.showSubmitErrors(component, fail));
+  }
 
-          if (fail.status == 400 && typeof fail.error == "object" ) { 
-            component.failureMessage.showFormErrors(fail.error.errors);
-          } else if (fail.status == 400 && typeof fail.error == "string") {
-            component.failureMessage.onShow(fail.error, undefined);
-          } else {
-            component.failureMessage.showConnectivityError();
-          }
-        });
+  showSubmitErrors(component: SubmitableForm | ListableResource | LoginFormComponent, fail: any) {
+    component.isLoading = false;
+
+    if (fail.status == 400 && typeof fail.error == "object" ) { 
+      component.failureMessage.showFormErrors(fail.error.errors);
+    } else if (fail.status == 400 && typeof fail.error == "string") {
+      component.failureMessage.onShow(fail.error, undefined);
+    } else {
+      component.failureMessage.showConnectivityError();
+    }
   }
 
   prepareToEdit(component: SubmitableForm): void {

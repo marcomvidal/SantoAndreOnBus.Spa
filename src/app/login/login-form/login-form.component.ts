@@ -5,6 +5,7 @@ import { Credential } from 'src/app/models/Credential';
 import { FailureMessageComponent } from 'src/app/shared/failure-message/failure-message.component';
 import { SuccessMessageComponent } from 'src/app/shared/success-message/success-message.component';
 import { AuthService } from 'src/app/auth/auth.service';
+import { CommonComponentTasksService } from 'src/app/common-component-tasks/common-component-tasks.service';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { AuthService } from 'src/app/auth/auth.service';
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.css']
 })
-export class LoginFormComponent implements OnInit  {
+export class LoginFormComponent implements OnInit {
 
   isLoading: boolean = false;
   credential: Credential;
@@ -21,7 +22,8 @@ export class LoginFormComponent implements OnInit  {
 
   constructor(
     private router: Router,
-    private service: AuthService) {
+    private service: AuthService,
+    private componentService: CommonComponentTasksService) {
     this.credential = new Credential();
   }
 
@@ -29,7 +31,7 @@ export class LoginFormComponent implements OnInit  {
   
   loadData(): void { }
 
-  async onSubmit(form: NgForm) {
+  onSubmit(form: NgForm) {
     this.successMessage.onHide();
     this.failureMessage.onHide();
     this.isLoading = true;
@@ -39,16 +41,6 @@ export class LoginFormComponent implements OnInit  {
         this.successMessage.onShow("Você será redirecionado em instantes.");
         this.router.navigate(['/dashboard']);
       },
-      fail => {
-        this.isLoading = false;
-
-        if (fail.status == 400 && typeof fail.error == "object" ) { 
-          this.failureMessage.showFormErrors(fail.error.errors);
-        } else if (fail.status == 400 && typeof fail.error == "string") {
-          this.failureMessage.onShow(fail.error, undefined);
-        } else {
-          this.failureMessage.showConnectivityError();
-        }
-      });
+      fail => this.componentService.showSubmitErrors(this, fail));
   }
 }
