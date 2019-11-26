@@ -45,16 +45,22 @@ export class LinesFormComponent implements OnInit, SubmitableForm {
 
     this.route.params.subscribe(params => {
       if (params['lineName']) { 
-        this.service.getByLineName(params['lineName']).subscribe(line => this.line = line);
+        this.service.getByLineName(params['lineName'])
+          .subscribe(
+            line => this.line = line,
+            error => this.failureMessage.showConnectivityError());
       }
     });
 
-    this.companyService.getAll().subscribe(companies => this.companies = companies);
+    this.companyService.getAll()
+      .subscribe(
+        companies => this.companies = companies,
+        error => this.failureMessage.showConnectivityError());
     
     this.vehicleService.getAll()
       .subscribe(
         vehicleTypes => this.vehicleTypes = vehicleTypes,
-        error => error,
+        error => this.failureMessage.showConnectivityError(),
         () => this.isLoading = false);
   }
 
