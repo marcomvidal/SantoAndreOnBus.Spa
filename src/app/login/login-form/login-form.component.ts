@@ -30,9 +30,7 @@ export class LoginFormComponent implements OnInit {
   ngOnInit() { }
 
   onSubmit(form: NgForm) {
-    this.successMessage.onHide();
-    this.failureMessage.onHide();
-    this.isLoading = true;
+    this.componentService.hideErrorMessages(this);
 
     this.service.login(this.credential)
       .subscribe(success => {

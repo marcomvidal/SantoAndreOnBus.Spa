@@ -31,8 +31,4 @@ export class Line {
         this.places = places != undefined ? places : new Array<Place>();
         this.vehicles = vehicles != undefined ? vehicles : new Array<Vehicle>();
     }
-
-    denomination() {
-        return this.letter + this.number;
-    }
 }

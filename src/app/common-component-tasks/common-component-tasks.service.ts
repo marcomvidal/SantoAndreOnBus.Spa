@@ -18,9 +18,7 @@ export class CommonComponentTasksService {
       onSuccess: () => void 
     }
       ) {
-      component.successMessage.onHide();
-      component.failureMessage.onHide();
-      component.isLoading = true;
+      this.hideErrorMessages(component);
 
       transactions().subscribe(
         success => {
@@ -29,6 +27,12 @@ export class CommonComponentTasksService {
           window.scrollTo(0, 0);
         },
         fail => this.showSubmitErrors(component, fail));
+  }
+
+  hideErrorMessages(component: SubmitableForm | ListableResource | LoginFormComponent) {
+    component.successMessage.onHide();
+    component.failureMessage.onHide();
+    component.isLoading = true;
   }
 
   showSubmitErrors(component: SubmitableForm | ListableResource | LoginFormComponent, fail: any) {
