@@ -32,7 +32,7 @@ export class AuthService {
         }));
   }
 
-  logoff(): void {
+  logoff() {
     localStorage.clear();
     this.isLogged = false;
     this.showMenuEmitter.emit(this.isLogged);

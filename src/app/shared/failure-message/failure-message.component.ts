@@ -18,11 +18,11 @@ export class FailureMessageComponent implements OnInit {
     this.onHide();
   }
 
-  onHide(): void {
+  onHide() {
     this.isHidden = true;
   }
 
-  onShow(description: string, validationErrors?: Object): void {
+  onShow(description: string, validationErrors?: Object) {
     this.description = description;
     this.validationErrors = null;
     
@@ -30,11 +30,11 @@ export class FailureMessageComponent implements OnInit {
     this.isHidden = false;
   }
 
-  showConnectivityError(): void {
+  showConnectivityError() {
     return this.onShow("Houve um problema na obtenção dos dados. Verifique sua conexão e tente novamente.");
   }
 
-  showFormErrors(errors: any): void {
+  showFormErrors(errors: any) {
     return this.onShow("Há erros de preenchimento deste formulário:", errors);
   }
 }

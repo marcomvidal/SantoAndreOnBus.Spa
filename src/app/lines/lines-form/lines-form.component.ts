@@ -84,7 +84,7 @@ export class LinesFormComponent implements OnInit, SubmitableForm {
     this.line.vehicles = this.line.vehicles.filter(v => v.id != vehicle.id);
   }
 
-  async onSubmit(form: NgForm): Promise<void> {
+  onSubmit(form: NgForm) {
     this.componentService.commitAndFeedback({
       component: this,
       transactions: () => this.line.id == null ?

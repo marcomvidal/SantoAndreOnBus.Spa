@@ -47,7 +47,7 @@ export class CompaniesIndexComponent implements SubmitableForm {
     this.newCompany.prefixes = this.newCompany.prefixes.filter(prefix => prefix.number != $event);
   }
 
-  async onSubmit(form: NgForm): Promise<void> {
+  onSubmit(form: NgForm) {
     this.componentService.commitAndFeedback({
       component: this,
       transactions: () => this.newCompany.id == null ?

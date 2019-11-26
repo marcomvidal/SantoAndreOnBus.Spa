@@ -14,7 +14,7 @@ export class BadgeComponent implements OnInit {
 
   ngOnInit() { }
 
-  onRemove(): void {
+  onRemove() {
     this.removeEvent.emit(this.item);
   }
 }

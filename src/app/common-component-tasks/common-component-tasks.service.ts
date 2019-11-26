@@ -43,12 +43,12 @@ export class CommonComponentTasksService {
     }
   }
 
-  prepareToEdit(component: SubmitableForm): void {
+  prepareToEdit(component: SubmitableForm) {
     component.isEditing = true;
     window.scrollTo(0, 0);
   }
 
-  prepareToResetForm(component: SubmitableForm, form: NgForm): void {
+  prepareToResetForm(component: SubmitableForm, form: NgForm) {
     form.resetForm(form.value);
     component.isEditing = false;
   }

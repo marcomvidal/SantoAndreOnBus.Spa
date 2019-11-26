@@ -16,7 +16,7 @@ export class TopBarComponent implements OnInit {
 
   ngOnInit() { }
 
-  logoff(): void {
+  logoff() {
     this.service.logoff();
   }
 }

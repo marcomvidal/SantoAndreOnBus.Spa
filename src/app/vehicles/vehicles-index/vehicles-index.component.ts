@@ -38,7 +38,7 @@ export class VehiclesIndexComponent implements OnInit, SubmitableForm {
         () => this.isLoading = false);
   }
 
-  onSubmit(form: NgForm): void {
+  onSubmit(form: NgForm) {
     this.componentService.commitAndFeedback({
       component: this,
       transactions: () => this.newVehicle.id == null ?

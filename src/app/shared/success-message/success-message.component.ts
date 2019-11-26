@@ -16,11 +16,11 @@ export class SuccessMessageComponent implements OnInit {
     this.onHide();
   }
 
-  onHide(): void {
+  onHide() {
     this.isHidden = true;
   }
 
-  onShow(description: string): void {
+  onShow(description: string) {
     this.description = description;
     this.isHidden = false;
   }

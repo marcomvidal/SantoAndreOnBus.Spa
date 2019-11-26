@@ -28,8 +28,6 @@ export class LoginFormComponent implements OnInit {
   }
 
   ngOnInit() { }
-  
-  loadData(): void { }
 
   onSubmit(form: NgForm) {
     this.successMessage.onHide();

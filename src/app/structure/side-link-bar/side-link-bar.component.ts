@@ -13,11 +13,11 @@ export class SideLinkBarComponent implements OnInit {
   @HostBinding('class.toggled') isExpanded: boolean = true;
   links: SideLink[] = LINKS;
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  onExpand(): void {
+  onExpand() {
     this.isExpanded = this.isExpanded == true ? false : true;
   }
 }
