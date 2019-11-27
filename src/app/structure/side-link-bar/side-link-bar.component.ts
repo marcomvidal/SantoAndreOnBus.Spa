@@ -1,6 +1,7 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { LINKS } from './side-link-bar.data';
 import { SideLink } from '../side-link/SideLink';
+import { SideLinkBarService } from './side-link-bar.service';
 
 @Component({
   selector: '[side-link-bar]',
@@ -13,11 +14,13 @@ export class SideLinkBarComponent implements OnInit {
   @HostBinding('class.toggled') isExpanded: boolean = true;
   links: SideLink[] = LINKS;
 
-  constructor() { }
+  constructor(private service: SideLinkBarService) {
+    this.service.toggleSideBarEvent.subscribe(() => this.onExpand());
+  }
 
   ngOnInit() { }
 
   onExpand() {
-    this.isExpanded = this.isExpanded == true ? false : true;
+    this.isExpanded = !this.isExpanded;
   }
 }

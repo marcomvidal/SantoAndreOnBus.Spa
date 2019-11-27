@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { SideLinkComponent } from './side-link/side-link.component';
 import { SideLinkBarComponent } from './side-link-bar/side-link-bar.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
+import { SideLinkBarService } from './side-link-bar/side-link-bar.service';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,9 @@ import { TopBarComponent } from './top-bar/top-bar.component';
     SideLinkComponent,
     SideLinkBarComponent,
     TopBarComponent
+  ],
+  providers: [
+    SideLinkBarService
   ]
 })
 export class StructureModule {}
