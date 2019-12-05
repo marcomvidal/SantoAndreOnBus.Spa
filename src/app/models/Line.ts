@@ -9,6 +9,7 @@ export class Line {
     number: string;
     fromwards: string;
     towards: string;
+    departures: number;
     peakHeadway: number;
     companyId?: number;
     company: Company;
@@ -17,13 +18,14 @@ export class Line {
     vehicles: Vehicle[];
 
     constructor(id?: number, letter?: string, number?: string, fromwards?: string,
-        towards?: string, peakHeadway?: number, company?: Company, companyId?: number,
+        towards?: string, departures?: number, peakHeadway?: number, company?: Company, companyId?: number,
         interestPoints?: InterestPoint[], places?: Place[], vehicles?: Vehicle[]) {
         this.id = id;
         this.letter = letter;
         this.number = number;
         this.fromwards = fromwards;
         this.towards = towards;
+        this.departures = departures;
         this.peakHeadway = peakHeadway;
         this.company = company;
         this.companyId = companyId;

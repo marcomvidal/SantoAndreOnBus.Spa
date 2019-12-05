@@ -8,19 +8,24 @@
 <form #form="ngForm" (ngSubmit)="onSubmit(form)">
     <card title="Informações gerais">
         <div class="card-body row">
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3">
                 <input name="letter" placeholder="Letra" class="form-control" [(ngModel)]="line.letter"
                     #name="ngModel" required maxlength="2" [disabled]="line.id != null" />
             </div>
 
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-3">
                 <input name="number" placeholder="Número" class="form-control" [(ngModel)]="line.number"
                     #name="ngModel" required maxlength="3" [disabled]="line.id != null" />
             </div>
 
-            <div class="form-group col-md-4">
-                <input name="peakHeadway" placeholder="Intervalo de pico (em minutos)" class="form-control" [(ngModel)]="line.peakHeadway"
-                    #name="ngModel" required />
+            <div class="form-group col-md-3">
+                <input name="peakHeadway" placeholder="Intervalo de pico (em minutos)" class="form-control" 
+                    [(ngModel)]="line.peakHeadway" #name="ngModel" required />
+            </div>
+
+            <div class="form-group col-md-3">
+                <input name="departures" placeholder="Partidas por dia útil" class="form-control"
+                    [(ngModel)]="line.departures" #name="ngModel" type="number" required />
             </div>
 
             <div class="form-group col-md-6">
