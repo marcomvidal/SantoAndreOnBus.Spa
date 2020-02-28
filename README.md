@@ -26,10 +26,10 @@ Os demais componentes representam páginas que fazem uso das estruturas supracit
 Não há armazenamento de credenciais sensíveis neste projeto. Em `environments`, ficam armazenadas apenas as URLs de WebAPIs dos ambientes de desenvolvimento e produção.
 
 ## Fluxo de execução
-1. A requisição chega ao `Controller` através de uma mensagem HTTP. Caso seja um POST ou PUT, os dados são desserializados em um `DTO`;
-2. A autenticação é realizada verificando o conteúdo do token JWT. Caso falhe, é enviado ao cliente o código HTTP 403;
-3. Dados são armazenados e / ou carregados pelo Entity Framework Core diretamente ou indiretamente (através de `Services`), caso operações mais complexas sejam exigidas;
-4. São enviados `DTOs` de resposta com os dados solicitados.
+1. O roteador do projeto encaminha o usuário a algum `Component` de página;
+2. As informações armazenadas são obtidas através da WebAPI por intermédio de um `Service` associado ao `Component` em questão;
+3. Dados de formulário e página são atualizados via `rxjs` pelo `CommonComponentTasksService`. Particularidades são executadas através de funções de callback;
+4. `Services` enviam informações à WebAPI caso o `Component` em questão seja um formulário.
 
 ## Autenticação
 Não são utilizados cookies. Toda a autenticação ocorre por tokens e seguem o seguinte fluxo:
