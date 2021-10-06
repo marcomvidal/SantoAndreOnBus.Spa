@@ -1,4 +1,4 @@
-# Santo André On Bus
+# SantoAndreOnBus.Spa
 
 Front-end administrativo para o aplicativo de consulta de informações de linhas de ônibus da cidade de Santo André.
 
